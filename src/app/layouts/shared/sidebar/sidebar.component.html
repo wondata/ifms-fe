@@ -1,0 +1,41 @@
+<mat-nav-list class="app-side-nav">
+    <div class="subsystem-card">
+        <div class="header">
+            <h2>Core Settings</h2>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>Security Setting</h2>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active" routerLink="/">Dashboard</a> -->
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/user-role">
+        <mat-icon> clear_all</mat-icon>
+        Operation
+    </a>
+    <!-- <a mat-list-item routerLinkActive="list-item-active" routerLink="/user-role">Subsystem</a> -->
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/user-role/role">
+        <mat-icon color="primary">group</mat-icon>
+        Role
+    </a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/user-role/user">
+        <mat-icon color="primary">person</mat-icon>
+        User
+    </a>
+    
+    <mat-divider></mat-divider>
+    
+    <h2 matSubheader>Tools</h2>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+        <mat-icon>import_contacts</mat-icon>
+        Contacts
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/units">
+        <mat-icon>contact_phone</mat-icon>
+        Units
+    </a>
+
+</mat-nav-list>
+
