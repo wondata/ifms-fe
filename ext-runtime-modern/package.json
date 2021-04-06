@@ -1,0 +1,49 @@
+{
+  "_from": "@sencha/ext-modern-runtime",
+  "_id": "@sencha/ext-modern-runtime@7.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-dnztC9JPjHJ0L1t4EIKhllvxrSlI839+EfqyHlVmUMNFKUI2TMVunnCmbJ5KJAwskUrK7MIeHvjCTY/qyNE4Ig==",
+  "_location": "/@sencha/ext-modern-runtime",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@sencha/ext-modern-runtime",
+    "name": "@sencha/ext-modern-runtime",
+    "escapedName": "@sencha%2fext-modern-runtime",
+    "scope": "@sencha",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://npm.sencha.com/@sencha%2fext-modern-runtime/-/ext-modern-runtime-7.2.1.tgz",
+  "_shasum": "dbce07fd2784cac6c2754e994c77b253b0f084c6",
+  "_spec": "@sencha/ext-modern-runtime",
+  "_where": "C:\\My Workspace\\Cyber\\CyberErp\\core-setting-fe",
+  "author": {
+    "name": "Sencha"
+  },
+  "bugs": {
+    "url": "https://github.com/sencha/ext-web-components/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "devDependencies": {},
+  "homepage": "https://github.com/sencha/ext-web-components#readme",
+  "keywords": [],
+  "license": "ISC",
+  "name": "@sencha/ext-modern-runtime",
+  "peerDependencies": {},
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sencha/ext-web-components.git"
+  },
+  "scripts": {},
+  "version": "7.2.1"
+}

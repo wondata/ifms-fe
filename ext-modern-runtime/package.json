@@ -1,0 +1,49 @@
+{
+  "_args": [
+    [
+      "@sencha/ext-modern-runtime@7.3.3",
+      "C:\\Users\\ACER\\Documents\\Cyber-Projects\\Cybersoft-ERP-dev"
+    ]
+  ],
+  "_from": "@sencha/ext-modern-runtime@7.3.3",
+  "_id": "@sencha/ext-modern-runtime@7.3.3",
+  "_inBundle": false,
+  "_integrity": "sha512-PAjs/YyIs2qOLYn5wnEApebOXSKFbc/02i5oDvG6j0YvotorHvEyuKsRbQ6cP950bZOxGezD95QGIO/Bn/w+jA==",
+  "_location": "/@sencha/ext-modern-runtime",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@sencha/ext-modern-runtime@7.3.3",
+    "name": "@sencha/ext-modern-runtime",
+    "escapedName": "@sencha%2fext-modern-runtime",
+    "scope": "@sencha",
+    "rawSpec": "7.3.3",
+    "saveSpec": null,
+    "fetchSpec": "7.3.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@sencha/ext-modern-runtime/-/ext-modern-runtime-7.3.3.tgz",
+  "_spec": "7.3.3",
+  "_where": "C:\\Users\\ACER\\Documents\\Cyber-Projects\\Cybersoft-ERP-dev",
+  "author": {
+    "name": "Sencha"
+  },
+  "dependencies": {},
+  "description": "## [About Ext JS](http://www.sencha.com/) Ext JS is a comprehensive and secure JavaScript framework with a powerful library of over 140 enterprise-grade UI components such as Data Grids, Pivot Grids, Trees, Charts, D3 Visualizations, Forms, Calendars, Buttons, Menus and many more. Ext JS feature-rich components are pre-built and tested and work across browsers and platforms. Packed with all the features you ever need, with Ext JS you’ll never have to go out of the framework to create and deploy stunning web and mobile applications.",
+  "devDependencies": {},
+  "homepage": "https://github.com/sencha/",
+  "keywords": [],
+  "license": "ISC",
+  "name": "@sencha/ext-modern-runtime",
+  "peerDependencies": {},
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sencha/"
+  },
+  "scripts": {},
+  "version": "7.3.3"
+}

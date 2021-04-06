@@ -29,9 +29,14 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/custom-theme.scss",
+              "ext-runtime-modern/material/material-all.css",
+              "style/tailwind-build.prod.css"
             ],
-            "scripts": []
+            "scripts": [
+              "ext-runtime-modern/modern.engine.enterprise.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,7 +99,8 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/custom-theme.scss"
             ],
             "scripts": []
           }
@@ -127,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "core-setting"
+  "defaultProject": "core-setting",
+  "cli": {
+    "analytics": false
+  }
 }

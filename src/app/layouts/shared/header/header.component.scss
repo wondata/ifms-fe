@@ -1,12 +1,9 @@
-ul li {
-    list-style: none;
+.nav {
+  height: 50px;
+  background-color: #5797d5 !important;
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.15);
 }
-
-.app-logo {
-    display: inline-block;
-    margin-top: 7px;
-}
-
-.app-toolbar {
-    background-color: #2196F3 !important;
+.onhover:hover {
+  cursor: pointer;
+  outline: none;
 }

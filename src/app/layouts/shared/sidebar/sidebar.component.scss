@@ -1,6 +1,7 @@
+@import '../../../../custom-theme.scss';
+
 :host {
     .mat-icon {
-        vertical-align: middle;
         margin-right: 15px;
         color: #a9afbb;
     }
@@ -10,3 +11,15 @@
     text-align: left;
     padding-left: 10px;
 }
+
+.list-item-active {
+    font-weight: bold;
+    color: mat-color($app-primary) !important;
+    background: rgba(0, 0, 0, 0.04);
+    .mat-icon {
+        color: mat-color($app-primary) !important;
+    }
+  }
+
+  
+

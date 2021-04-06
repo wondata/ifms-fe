@@ -1,21 +1,33 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+declare var Ext: any;
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  @Output() 
-  toggleSidebarClicked: EventEmitter<any> = new EventEmitter()
+  @Output() toggleSidebarClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  menuStatus = true;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.isHome();
+  }
+  isHome(): void {
+    if (this.router.url === '/home') {
+      this.menuStatus = false;
+    }
+  }
 
-  toggleSidebar() {
+  toggleSidebar(): void {
     this.toggleSidebarClicked.emit();
   }
 
+  logout(): void {
+    this.router.navigate(['/auth/login']);
+  }
 }

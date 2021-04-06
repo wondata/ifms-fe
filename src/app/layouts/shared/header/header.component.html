@@ -1,35 +1,25 @@
-<mat-toolbar color="primary" class="app-toolbar">
-    <mat-toolbar-row>
-        <button mat-icon-button (click)="toggleSidebar()">
-            <mat-icon>menu</mat-icon>
-        </button>
-
-        <span><img src="assets/images/logo.png" class="app-logo" alt="" /></span>
-
-        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-            <ul fxLayout="row" fxLayoutGap="20px">
-                <li>
-                    <button mat-icon-button>
-                        <mat-icon>settings</mat-icon>
-                    </button>
-                </li>
-                <li>
-                    <button mat-icon-button>
-                        <mat-icon>help_outline</mat-icon>
-                    </button>
-                </li>
-                <li>
-                    <button mat-button [matMenuTriggerFor]="menu">
-                        <mat-icon>person_outline</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
-                            <mat-icon>exit_to_app</mat-icon>
-                            Sign out
-                        </button>
-                    </mat-menu>
-                </li>
-            </ul>
-        </div>
-    </mat-toolbar-row>
-</mat-toolbar>
+<nav class="nav flex items-center flex-row justify-between sticky top-0 z-50">
+  <div class="flex justify-start lg:justify-center">
+    <div
+      class="lg:flex flex-grow icon ml-3 w-5 h-5"
+      (click)="toggleSidebar()"
+      *ngIf="menuStatus"
+    >
+      <img class="onhover" src="assets/images/header/menu.png" alt="menu" />
+    </div>
+    <div [routerLink]="['/dashboard']" class="onhover">
+      <img class="ml-4" src="assets/images/logo.png" alt="Cyber ERP" />
+    </div>
+  </div>
+  <div class="flex flex-shrink-0 justify-between mt-1" style="min-width: 220px">
+    <div [routerLink]="['/home']" class="ml-auto onhover">
+      <mat-icon>home</mat-icon>
+    </div>
+    <div class="ml-auto cursor-not-allowed onhover">
+      <mat-icon>help_outline</mat-icon>
+    </div>
+    <div (click)="logout()" class="ml-auto mr-6 onhover">
+      <mat-icon>exit_to_app</mat-icon>
+    </div>
+  </div>
+</nav>
