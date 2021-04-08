@@ -5,9 +5,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxsModule } from '@ngxs/store';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { AppRoutingModule } from './app-routing.module';
+import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
 import { LayoutModule } from './layouts/layout.module';
 
 @NgModule({
@@ -20,10 +22,12 @@ import { LayoutModule } from './layouts/layout.module';
     MatTableModule,
     MatSnackBarModule,
     LayoutModule,
+    NgxsModule.forRoot([]),
     MatGridListModule,
+    NgxsModule.forFeature([]),
     NgxPermissionsModule.forRoot(),
   ],
-  providers: [],
+  providers: [{ provide: 'environment', useValue: environment }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

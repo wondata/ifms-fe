@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 import { LayoutDefaultComponent } from './layouts/default/default.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
@@ -18,6 +19,19 @@ const routes: Routes = [
         component: DashboardComponent,
       },
     ],
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./modules/settings/settings.module').then(
+        (mod) => mod.SettingsModule
+      ),
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      permissions: {
+        only: [],
+      },
+    },
   },
 ];
 @NgModule({
