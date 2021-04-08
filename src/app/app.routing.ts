@@ -22,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'settings',
+    component: LayoutDefaultComponent,
     loadChildren: () =>
       import('./modules/settings/settings.module').then(
         (mod) => mod.SettingsModule
