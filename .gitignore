@@ -9,6 +9,8 @@
 
 # dependencies
 /node_modules
+/ext-modern-runtime
+/ext-runtime-modern
 
 # profiling files
 chrome-profiler-events*.json
