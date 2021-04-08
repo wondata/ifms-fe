@@ -61,6 +61,15 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#357061",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#357061",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "statusBar.background": "#123a18",
+    "statusBarItem.hoverBackground": "#123a18",
+    "statusBar.foreground": "#e7e7e7"
+  },
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.iconTheme": "material-icon-theme",
@@ -81,10 +90,5 @@
   },
   "editor.formatOnSave": true,
   "cSpell.words": ["antd", "ngxs", "semibold"],
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#1C3135",
-    "titleBar.activeBackground": "#366e54",
-    "titleBar.activeForeground": "#F9FBFC"
-  }
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
