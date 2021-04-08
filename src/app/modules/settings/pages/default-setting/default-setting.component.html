@@ -1,0 +1,18 @@
+<ExtContainer padding="10" layout="fit" fitToParent="true">
+  <ExtFormpanel
+    [shadow]="true"
+    [layout]="{ type: 'vbox', align: 'left' }"
+    [bodyPadding]="10"
+    [defaults]="{ labelAlign: 'left', labelTextAlign: 'right' }"
+  >
+    <ExtContainerfield
+      [label]="'Name'"
+      [layout]="isPhone ? 'vbox' : 'vbox'"
+      [defaults]="{ labelAlign: 'bottom' }"
+    >
+      <ExtTextfield [label]="'First'"></ExtTextfield>
+      <ExtTextfield [label]="'Middle'"></ExtTextfield>
+      <ExtTextfield [label]="'Last'"></ExtTextfield>
+    </ExtContainerfield>
+  </ExtFormpanel>
+</ExtContainer>
