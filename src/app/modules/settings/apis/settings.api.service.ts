@@ -1,8 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { voucherType } from './../../../models/defaultSettings';
+import {
+  FixedAssetSettings,
+  GeneralSettings,
+  voucherType,
+} from './../../../models/defaultSettings';
 import { SettingsEndpoints } from './settings.endpoint';
 
 @Injectable()
@@ -12,11 +16,41 @@ export class SettingsApiService {
   contentType = 'Content-Type';
   contentApplication = 'application/json';
 
-  voucherType(): Observable<any> {
+  voucherType(): Observable<voucherType> {
     return this.http.get<voucherType>(SettingsEndpoints.voucherType).pipe(
       map((value: any) => {
         return value.reduce((a, x) => ({ ...a, [x.value]: x.name }), {});
       })
+    );
+  }
+
+  createGeneralSettings(
+    generalSettings: GeneralSettings
+  ): Observable<GeneralSettings> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<GeneralSettings>(
+      SettingsEndpoints.createGeneralSettings,
+      generalSettings,
+      { headers }
+    );
+  }
+
+  createFixedAssetSettings(
+    fixedAssetSettings: FixedAssetSettings
+  ): Observable<FixedAssetSettings> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<FixedAssetSettings>(
+      SettingsEndpoints.createFixedAssetSettings,
+      fixedAssetSettings,
+      { headers }
     );
   }
 }

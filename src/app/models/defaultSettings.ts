@@ -1,16 +1,16 @@
 export interface GeneralSettings {
-  incomeSummaryAsc: string;
-  closingCapitalAsc: string;
+  incomeSummaryAccount: string;
+  closingCapitalAccount: string;
   defaultCostCenter: string;
-  interBranchControlAsc: string;
+  interBranchControlAccount: string;
 }
 
 export interface FixedAssetSettings {
   defaultCostCenter: string;
   defaultVoucherType: string[];
-  gainOnDisposalAsc: string;
-  lossOnDisposalAsc: string;
-  cashAsc: string;
+  gainOnDisposalAccount: string;
+  lossOnDisposalAccount: string;
+  cashAccount: string;
 }
 
 export interface voucherType {

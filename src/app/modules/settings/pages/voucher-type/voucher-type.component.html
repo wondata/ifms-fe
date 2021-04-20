@@ -1,0 +1,130 @@
+<div class="">
+  <table mat-table [dataSource]="dataSource">
+    <caption></caption>
+    <ng-container matColumnDef="CostCenter">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Cost Center</th>
+      <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="VoucherType">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Voucher Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="DefaultAccount">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Default Account</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="AccountTitle">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Account Title</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="BalanceSide">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Balance Side</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="StartingNumber">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Starting Number</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="EndingNumber">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Ending Number</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="CurrentNumber">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Current Number</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="NumberOfDigits">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Number of Digits</th>
+      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th scope="col" mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button mat-raised-button>Edit</button>
+        <button onclick="" class="ml-1" mat-raised-button>View</button>
+        <button onclick="" class="ml-1" mat-raised-button>Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 15, 20]"
+    [pageSize]="15"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+
+<ExtButton
+  [text]="'Show dialog'"
+  (tap)="showDialog()"
+  [ui]="'action raised'"
+></ExtButton>
+
+<ExtDialog
+  [displayed]="isDialogShowing"
+  [title]="'Dialog'"
+  [closable]="false"
+  [maximizable]="true"
+  [closeAction]="'hide'"
+  [maskTapHandler]="onCancel"
+  [bodyPadding]="20"
+  [maxWidth]="200"
+  [defaultFocus]="'#ok'"
+  (onHide)="onHide()"
+  html="'{{ tempForm }}'"
+>
+</ExtDialog>
+<template #tempForm>
+  >
+  <form
+    action="
+"
+  >
+    <ExtContainer [width]="10" layout="fit" fitToParent="true"
+      ><ExtFormpanel
+        [padding]="20"
+        [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }"
+      >
+        <ExtFieldset [title]="''" [defaults]="{ labelAlign: 'placeholder' }">
+          <ExtTextfield
+            [label]="'Income Summery Account'"
+            [placeholder]="''"
+            [disabled]="disabled"
+          >
+          </ExtTextfield>
+          <ExtTextfield
+            [label]="'Closing Capital Account'"
+            [placeholder]="''"
+            [disabled]="disabled"
+          >
+          </ExtTextfield>
+          <ExtTextfield
+            [label]="'Default Cost Center'"
+            [placeholder]="''"
+            [disabled]="disabled"
+          >
+          </ExtTextfield>
+          <ExtTextfield
+            [label]="'Inter Branch Control Account'"
+            [placeholder]="''"
+            [disabled]="disabled"
+          >
+          </ExtTextfield>
+        </ExtFieldset>
+        <ExtButton [margin]="'40 0 0 0'" [text]="'Save'"> </ExtButton>
+      </ExtFormpanel>
+    </ExtContainer>
+  </form>
+</template>

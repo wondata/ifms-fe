@@ -1,18 +1,117 @@
-<ExtContainer padding="10" layout="fit" fitToParent="true">
-  <ExtFormpanel
-    [shadow]="true"
-    [layout]="{ type: 'vbox', align: 'left' }"
-    [bodyPadding]="10"
-    [defaults]="{ labelAlign: 'left', labelTextAlign: 'right' }"
-  >
-    <ExtContainerfield
-      [label]="'Name'"
-      [layout]="isPhone ? 'vbox' : 'vbox'"
-      [defaults]="{ labelAlign: 'bottom' }"
-    >
-      <ExtTextfield [label]="'First'"></ExtTextfield>
-      <ExtTextfield [label]="'Middle'"></ExtTextfield>
-      <ExtTextfield [label]="'Last'"></ExtTextfield>
-    </ExtContainerfield>
-  </ExtFormpanel>
-</ExtContainer>
+<div class="ml-10 divide-y-2 divide-gray-200 divide-solid">
+  <div class="mt-4 mb-4 ml-10">
+    <p class="text-2xl">Default Settings</p>
+  </div>
+  <div class="flex flex-row ml-10 mt-6">
+    <div class="mt-8 flex-1">
+      <p class="text-xl mt-2">General Settings</p>
+      <p class="mt-4 text-xs">General Settings Description</p>
+    </div>
+    <div class="flex-1 -mt-8">
+      <form [formGroup]="generalSettingsForm">
+        <ExtContainer [width]="width" layout="fit" fitToParent="true"
+          ><ExtFormpanel
+            [padding]="20"
+            [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }"
+          >
+            <ExtFieldset
+              [title]="''"
+              [defaults]="{ labelAlign: 'placeholder' }"
+            >
+              <ExtTextfield
+                [label]="'Income Summery Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+              <ExtTextfield
+                [label]="'Closing Capital Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+              <ExtTextfield
+                [label]="'Default Cost Center'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+              <ExtTextfield
+                [label]="'Inter Branch Control Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+            </ExtFieldset>
+            <ExtButton
+              [margin]="'40 0 0 0'"
+              [text]="'Save'"
+              (tap)="onSubmitGeneralSettingsForm()"
+            >
+            </ExtButton>
+          </ExtFormpanel>
+        </ExtContainer>
+      </form>
+    </div>
+  </div>
+  <div class="flex flex-row ml-10 mt-1">
+    <div class="mt-8 flex-1">
+      <p class="text-xl mt-2">Fixed Asset Settings</p>
+      <p class="mt-4 text-xs">Fixed Asset Settings Description</p>
+    </div>
+    <div class="flex-1 -mt-8">
+      <form [formGroup]="fixedAssetSettingsForm">
+        <ExtContainer [width]="width" layout="fit" fitToParent="true"
+          ><ExtFormpanel
+            [padding]="20"
+            [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }"
+          >
+            <ExtFieldset
+              [title]="''"
+              [defaults]="{ labelAlign: 'placeholder' }"
+            >
+              <ExtTextfield
+                [label]="'Default Cost Center'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+              <ExtTextfield
+                [label]="'Default Voucher Type'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+              <ExtTextfield
+                [label]="'Gain On Disposal Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+
+              <ExtTextfield
+                [label]="'Loss On Disposal Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+
+              <ExtTextfield
+                [label]="'Cash Account'"
+                [placeholder]="''"
+                [disabled]="disabled"
+              >
+              </ExtTextfield>
+            </ExtFieldset>
+            <ExtButton
+              [margin]="'40 0 0 0'"
+              [text]="'Save'"
+              (tap)="onSubmitFixedAssetSettingsForm()"
+            >
+            </ExtButton>
+          </ExtFormpanel>
+        </ExtContainer>
+      </form>
+    </div>
+  </div>
+</div>
