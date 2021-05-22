@@ -11,6 +11,7 @@ import { SettingsApiService } from '../../apis/settings.api.service';
 import {
   CreateFixedAssetsSettings,
   CreateGeneralSettings,
+  ListCostCode,
   ListVoucherTypes,
 } from './../action/setting.action';
 
@@ -18,6 +19,8 @@ export interface SettingStateModel {
   voucherType: voucherType;
   createGeneralSettings: GeneralSettings;
   createFixedAssetSettings: FixedAssetSettings;
+  listCostCode: any;
+  listVoucherType: any;
   loading: boolean;
 }
 
@@ -28,6 +31,8 @@ export interface SettingStateModel {
     loading: undefined,
     createGeneralSettings: undefined,
     createFixedAssetSettings: undefined,
+    listCostCode: undefined,
+    listVoucherType: undefined,
   },
 })
 @Injectable()
@@ -75,6 +80,38 @@ export class SettingState {
     return this.settingApiService.createFixedAssetSettings(payload).pipe(
       tap((result: FixedAssetSettings) => {
         patchState({ createFixedAssetSettings: result, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(ListCostCode) listCostCode(
+    { patchState }: StateContext<SettingStateModel>,
+    payload: ListCostCode
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.settingApiService.getCostCodes().pipe(
+      tap((item: any) => {
+        patchState({ listCostCode: item, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(ListVoucherTypes) listVoucherTypes(
+    { patchState }: StateContext<SettingStateModel>,
+    payload: ListVoucherTypes
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.settingApiService.getVoucherType().pipe(
+      tap((item: any) => {
+        patchState({ listVoucherType: item, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

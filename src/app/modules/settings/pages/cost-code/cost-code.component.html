@@ -1,33 +1,16 @@
-<div class="">
-  <table mat-table [dataSource]="dataSource">
-    <caption></caption>
-
-    <ng-container matColumnDef="position">
-      <th scope="col" mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th scope="col" mat-header-cell *matHeaderCellDef>CostCode</th>
-      <td mat-cell *matCellDef="let element">{{ element.CostCode }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-      <th scope="col" mat-header-cell *matHeaderCellDef>Action</th>
-      <td mat-cell *matCellDef="let element" class="action-link">
-        <button mat-raised-button>Edit</button>
-        <button onclick="" class="ml-1" mat-raised-button>View</button>
-        <button onclick="" class="ml-1" mat-raised-button>Delete</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 15, 20]"
-    [pageSize]="15"
-    showFirstLastButtons
-  ></mat-paginator>
-</div>
+<ExtPanel extname="home"
+  padding="10 10 10 2"
+  layout="fit"
+  fitToParent="true">
+  <ExtGrid [store]="store">
+    <ExtColumn text="Id"
+      dataIndex="Id"
+      width="200"></ExtColumn>
+    <ExtColumn text="Name"
+      dataIndex="Name"
+      width="200"></ExtColumn>
+    <ExtColumn text="Code"
+      dataIndex="Code"
+      width="200"></ExtColumn>
+  </ExtGrid>
+</ExtPanel>

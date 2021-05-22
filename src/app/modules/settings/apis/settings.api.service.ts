@@ -53,4 +53,10 @@ export class SettingsApiService {
       { headers }
     );
   }
+  getCostCodes(): Observable<any> {
+    return this.http.get<any>(SettingsEndpoints.getCostCodes);
+  }
+  getVoucherType(): Observable<any> {
+    return this.http.get<any>(SettingsEndpoints.getVoucherType);
+  }
 }

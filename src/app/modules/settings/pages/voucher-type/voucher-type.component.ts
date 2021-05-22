@@ -1,79 +1,20 @@
 declare var Ext: any;
-
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ViewChild,
-} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { gridData } from '../../components/voucherTypeData';
+import { ListVoucherTypes } from '../../store/action/setting.action';
 @Component({
   selector: 'app-voucher-type',
   templateUrl: './voucher-type.component.html',
   styleUrls: ['./voucher-type.component.scss'],
 })
-export class VoucherTypeComponent implements AfterViewInit {
-  constructor(private cd: ChangeDetectorRef) {}
-  disabled: boolean = false;
+export class VoucherTypeComponent implements OnInit {
+  constructor(private readonly stored: Store) {}
+  store = Ext.create('Ext.data.Store', {
+    data: gridData,
+  });
 
-  displayedColumns: string[] = [
-    'CostCenter',
-    'VoucherType',
-    'DefaultAccount',
-    'AccountTitle',
-    'BalanceSide',
-    'StartingNumber',
-    'EndingNumber',
-    'CurrentNumber',
-    'NumberOfDigits',
-    'action',
-  ];
-  dataSource = new MatTableDataSource<CustomList>(CUSTOM_LIST);
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+  ngOnInit() {
+    this.stored.dispatch(new ListVoucherTypes());
   }
-
-  isDialogShowing: boolean = false;
-  showDialog = () => {
-    this.isDialogShowing = true;
-    this.cd.detectChanges();
-  };
-  onOk = () => {
-    this.isDialogShowing = false;
-    this.cd.detectChanges();
-  };
-  onCancel = () => {
-    this.isDialogShowing = false;
-    this.cd.detectChanges();
-  };
-  onHide = () => {
-    this.isDialogShowing = false;
-    this.cd.detectChanges();
-  };
 }
-
-export interface CustomList {
-  Name: string;
-  CostCode: number;
-}
-
-const CUSTOM_LIST: CustomList[] = [
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-];

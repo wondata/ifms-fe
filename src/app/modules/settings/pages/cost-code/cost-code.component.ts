@@ -1,42 +1,23 @@
 declare var Ext: any;
 
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { gridData } from '../../components/costCodeData';
+import { ListCostCode } from '../../store/action/setting.action';
 
 @Component({
   selector: 'app-cost-code',
   templateUrl: './cost-code.component.html',
   styleUrls: ['./cost-code.component.scss'],
 })
-export class CostCodeComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'action'];
-  dataSource = new MatTableDataSource<CustomList>(CUSTOM_LIST);
+export class CostCodeComponent implements OnInit {
+  constructor(private readonly stored: Store) {}
+  store = Ext.create('Ext.data.Store', {
+    fields: ['Id', 'Name', 'Code'],
+    data: gridData,
+  });
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+  ngOnInit() {
+    this.stored.dispatch(new ListCostCode());
   }
 }
-
-export interface CustomList {
-  Name: string;
-  CostCode: number;
-}
-
-const CUSTOM_LIST: CustomList[] = [
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-  { Name: 'Name', CostCode: 1 },
-];
