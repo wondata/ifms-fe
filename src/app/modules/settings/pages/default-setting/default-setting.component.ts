@@ -1,6 +1,6 @@
 declare var Ext: any;
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import {
   CreateFixedAssetsSettings,
@@ -25,14 +25,14 @@ export class DefaultSettingComponent implements OnInit {
 
   constructor(private readonly fb: FormBuilder, private readonly store: Store) {
     this.generalSettingsForm = this.fb.group({
-      incomeSummeryAccount: [''],
+      incomeSummeryAccount: ['', Validators.required],
       closingCapitalAccount: [''],
       defaultCostCenter: [''],
       interBranchControlAccount: [''],
     });
 
     this.fixedAssetSettingsForm = this.fb.group({
-      defaultCostCenter: [''],
+      defaultCostCenter: ['', Validators.required],
       defaultVoucherType: [''],
       gainOnDisposalAccount: [''],
       lossOnDisposalAccount: [''],
@@ -44,9 +44,11 @@ export class DefaultSettingComponent implements OnInit {
   onSubmitGeneralSettingsForm(): void {
     if (this.generalSettingsForm.valid) {
       this.generalSettingsForm.markAsPristine();
-      this.store.dispatch(
-        new CreateGeneralSettings(this.generalSettingsForm.value)
-      );
+      this.store
+        .dispatch(new CreateGeneralSettings(this.generalSettingsForm.value))
+        .subscribe(() => {
+          Ext.toast('Successfully added General Settings');
+        });
     } else {
       Ext.toast('All required fields should be filled!');
     }
@@ -55,9 +57,14 @@ export class DefaultSettingComponent implements OnInit {
   onSubmitFixedAssetSettingsForm(): void {
     if (this.fixedAssetSettingsForm.valid) {
       this.fixedAssetSettingsForm.markAsPristine();
-      this.store.dispatch(
-        new CreateFixedAssetsSettings(this.fixedAssetSettingsForm.value)
-      );
+      this.store
+        .dispatch(
+          new CreateFixedAssetsSettings(this.fixedAssetSettingsForm.value)
+        )
+
+        .subscribe(() => {
+          Ext.toast('Successfully added Fixed Asset Settings');
+        });
     } else {
       Ext.toast('All required fields should be filled!');
     }
