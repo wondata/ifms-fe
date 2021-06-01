@@ -5,22 +5,27 @@
     </div>
   </div>
   <mat-divider></mat-divider>
+  <h2 matSubheader>Transactions</h2>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions">
+    Voucher
+  </a>
+  <mat-divider></mat-divider>
   <h2 matSubheader>Settings</h2>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/settings">
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/settings">
     Default Settings
   </a>
-  <a
-    mat-list-item
+  <a mat-list-item
     routerLinkActive="list-item-active"
-    routerLink="/settings/costcode"
-  >
+    routerLink="/settings/costcode">
     Cost Code
   </a>
-  <a
-    mat-list-item
+  <a mat-list-item
     routerLinkActive="list-item-active"
-    routerLink="/settings/vouchertype"
-  >
+    routerLink="/settings/vouchertype">
     Voucher Type
   </a>
 </mat-nav-list>
