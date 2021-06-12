@@ -8,7 +8,8 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxsModule } from '@ngxs/store';
 import { ExtAngularModernModule } from '@sencha/ext-angular-modern';
 import { SettingsApiService } from './apis/settings.api.service';
-import { CostCodeComponent } from './pages/cost-code/cost-code.component';
+import { CostCodeComponent } from './components/cost-code/cost-code.component';
+import { CostCodePageComponent } from './pages/cost-code/cost-code.component';
 import { DefaultSettingComponent } from './pages/default-setting/default-setting.component';
 import { VoucherTypeComponent } from './pages/voucher-type/voucher-type.component';
 import { SettingsRoutingModule } from './settings.routing';
@@ -17,6 +18,7 @@ import { SettingState } from './store/states/setting.state';
   declarations: [
     DefaultSettingComponent,
     CostCodeComponent,
+    CostCodePageComponent,
     VoucherTypeComponent,
   ],
   imports: [

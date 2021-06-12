@@ -42,7 +42,10 @@ export class SettingState {
   @Selector() public static voucherType(state: SettingStateModel): voucherType {
     return state.voucherType;
   }
-
+  @Selector()
+  static listCostCode(state: SettingStateModel): any {
+    return state.listCostCode;
+  }
   @Action(ListVoucherTypes) getVoucherType({
     patchState,
   }: StateContext<SettingStateModel>): any {
@@ -95,7 +98,13 @@ export class SettingState {
 
     return this.settingApiService.getCostCodes().pipe(
       tap((item: any) => {
-        patchState({ listCostCode: item, loading: false });
+        const list = item.Data.map((i) => {
+          return {
+            Code: i.Code,
+            Name: i.Name,
+          };
+        });
+        patchState({ listCostCode: list, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

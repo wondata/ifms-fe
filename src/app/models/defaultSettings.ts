@@ -16,3 +16,8 @@ export interface FixedAssetSettings {
 export interface voucherType {
   [value: string]: string;
 }
+export interface CostCode {
+  ID: string;
+  Name: string;
+  CostCode: string;
+}
