@@ -9,3 +9,7 @@ export class CreateVoucher {
   static readonly type = '[TransactionsState] CreateVoucher';
   constructor(public readonly payload?: Voucher) {}
 }
+export class ListChartsOfAccount {
+  static readonly type = '[TransactionsState] ListChartsOfAccount';
+  constructor(public readonly payload?: any) {}
+}

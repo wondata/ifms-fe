@@ -32,4 +32,7 @@ export class TransactionsApiService {
       { headers }
     );
   }
+  getChartsOfAccount(): Observable<any> {
+    return this.http.post<any>(TransactionsEndpoints.listChartsOfAccount, null);
+  }
 }

@@ -19,7 +19,7 @@ export class CashierPageComponent implements OnInit {
     this.store.dispatch(new ListCashier());
     this.listCashier$.subscribe((stateValue: any) => {
       this.stored = Ext.create('Ext.data.Store', {
-        fields: ['FullName', 'email', 'phone', 'hoursTaken', 'hoursRemaining'],
+        fields: ['Name', 'email', 'phone', 'hoursTaken', 'hoursRemaining'],
         data: stateValue,
       });
     });
