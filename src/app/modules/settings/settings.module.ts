@@ -14,12 +14,14 @@ import { DefaultSettingComponent } from './pages/default-setting/default-setting
 import { VoucherTypeComponent } from './pages/voucher-type/voucher-type.component';
 import { SettingsRoutingModule } from './settings.routing';
 import { SettingState } from './store/states/setting.state';
+import { CashierPageComponent } from './pages/cashier/cashier.component';
 @NgModule({
   declarations: [
     DefaultSettingComponent,
     CostCodeComponent,
     CostCodePageComponent,
     VoucherTypeComponent,
+    CashierPageComponent,
   ],
   imports: [
     NgxsModule.forFeature([SettingState]),

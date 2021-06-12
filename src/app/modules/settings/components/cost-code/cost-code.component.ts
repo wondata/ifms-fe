@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { ListCostCode } from '../../store/action/setting.action';
 import { SettingState } from '../../store/states/setting.state';
 import { CostCode } from './../../../../models/defaultSettings';
-import { gridData } from './../../components/costCodeData';
 
 @Component({
   selector: 'app-costcode',
@@ -23,9 +22,4 @@ export class CostCodeComponent implements OnInit {
       const costCodeList = stateValue.SettingState.listCostCode;
     });
   }
-
-  store = Ext.create('Ext.data.Store', {
-    fields: ['Id', 'Name', 'Code'],
-    data: gridData,
-  });
 }

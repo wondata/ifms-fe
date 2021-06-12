@@ -19,7 +19,7 @@ export class CostCodePageComponent implements OnInit {
     this.store.dispatch(new ListCostCode());
     this.listCostCode$.subscribe((stateValue: any) => {
       this.stored = Ext.create('Ext.data.Store', {
-        fields: ['Value', 'Name', 'Code'],
+        fields: ['Name', 'Code'],
         data: stateValue,
       });
     });

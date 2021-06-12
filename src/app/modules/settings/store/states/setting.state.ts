@@ -5,21 +5,24 @@ import { catchError, tap } from 'rxjs/operators';
 import {
   FixedAssetSettings,
   GeneralSettings,
-  voucherType,
+  VoucherType,
+  Cashier,
 } from '../../../../models/defaultSettings';
 import { SettingsApiService } from '../../apis/settings.api.service';
 import {
   CreateFixedAssetsSettings,
   CreateGeneralSettings,
+  ListCashier,
   ListCostCode,
   ListVoucherTypes,
 } from './../action/setting.action';
 
 export interface SettingStateModel {
-  voucherType: voucherType;
+  voucherType: VoucherType;
   createGeneralSettings: GeneralSettings;
   createFixedAssetSettings: FixedAssetSettings;
   listCostCode: any;
+  listCashier: any;
   listVoucherType: any;
   loading: boolean;
 }
@@ -32,6 +35,7 @@ export interface SettingStateModel {
     createGeneralSettings: undefined,
     createFixedAssetSettings: undefined,
     listCostCode: undefined,
+    listCashier: undefined,
     listVoucherType: undefined,
   },
 })
@@ -39,8 +43,12 @@ export interface SettingStateModel {
 export class SettingState {
   constructor(private readonly settingApiService: SettingsApiService) {}
 
-  @Selector() public static voucherType(state: SettingStateModel): voucherType {
+  @Selector() public static voucherType(state: SettingStateModel): VoucherType {
     return state.voucherType;
+  }
+
+  @Selector() public static listCashier(state: SettingStateModel): Cashier {
+    return state.listCashier;
   }
   @Selector()
   static listCostCode(state: SettingStateModel): any {
@@ -49,10 +57,11 @@ export class SettingState {
   @Action(ListVoucherTypes) getVoucherType({
     patchState,
   }: StateContext<SettingStateModel>): any {
-    return this.settingApiService.voucherType().pipe(
-      tap((type: voucherType) => {
-        patchState({ voucherType: type });
-      })
+    return this.settingApiService.getVoucherType().pipe(
+      tap((item: any) => {
+        patchState({ listVoucherType: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
     );
   }
 
@@ -98,13 +107,7 @@ export class SettingState {
 
     return this.settingApiService.getCostCodes().pipe(
       tap((item: any) => {
-        const list = item.Data.map((i) => {
-          return {
-            Code: i.Code,
-            Name: i.Name,
-          };
-        });
-        patchState({ listCostCode: list, loading: false });
+        patchState({ listCostCode: item.Data, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );
@@ -120,7 +123,22 @@ export class SettingState {
 
     return this.settingApiService.getVoucherType().pipe(
       tap((item: any) => {
-        patchState({ listVoucherType: item, loading: false });
+        patchState({ listVoucherType: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+  @Action(ListCashier) listCashier(
+    { patchState }: StateContext<SettingStateModel>,
+    payload: ListCashier
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.settingApiService.getCashier().pipe(
+      tap((item: any) => {
+        patchState({ listCashier: item.Data, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );
