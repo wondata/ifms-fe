@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
-import { CostCodeComponent } from './pages/cost-code/cost-code.component';
+import { CostCodePageComponent } from './pages/cost-code/cost-code.component';
 import { DefaultSettingComponent } from './pages/default-setting/default-setting.component';
 import { VoucherTypeComponent } from './pages/voucher-type/voucher-type.component';
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'costcode',
-    component: CostCodeComponent,
+    component: CostCodePageComponent,
     canActivate: [NgxPermissionsGuard],
     data: {
       permissions: {
