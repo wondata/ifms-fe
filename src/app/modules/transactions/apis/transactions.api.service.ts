@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Voucher } from 'src/app/models/voucher';
-import { GeneralSettings } from './../../../models/defaultSettings';
 import { TransactionsEndpoints } from './transactions.endpoint';
 
 @Injectable()
@@ -27,7 +26,7 @@ export class TransactionsApiService {
       this.contentApplication
     );
 
-    return this.http.post<GeneralSettings>(
+    return this.http.post<Voucher>(
       TransactionsEndpoints.createVoucher,
       voucher,
       { headers }
