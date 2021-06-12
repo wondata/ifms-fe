@@ -8,11 +8,25 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxsModule } from '@ngxs/store';
 import { ExtAngularModernModule } from '@sencha/ext-angular-modern';
 import { TransactionsApiService } from './apis/transactions.api.service';
+import { VoucherFormComponent } from './components/voucher-form/voucher-form.component';
+import { VoucherListComponent } from './components/voucher-list/voucher-list.component';
+import { BankReconciliationComponent } from './pages/bankreconciliation/bankreconciliation.component';
+import { ChartOfAccountComponent } from './pages/chartofaccount/chartofaccount.component';
+import { CollectionVoucherComponent } from './pages/collectionvoucher/collectionvoucher.component';
+import { FinancialTransactionComponent } from './pages/financialtransactions/financialtransactions.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
 import { TransactionsState } from './store/states/transactions.state';
 import { TransactionsRoutingModule } from './transactions.routing';
 @NgModule({
-  declarations: [VoucherComponent],
+  declarations: [
+    VoucherListComponent,
+    VoucherFormComponent,
+    VoucherComponent,
+    BankReconciliationComponent,
+    ChartOfAccountComponent,
+    CollectionVoucherComponent,
+    FinancialTransactionComponent,
+  ],
   imports: [
     NgxsModule.forFeature([TransactionsState]),
     CommonModule,
