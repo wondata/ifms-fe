@@ -13,3 +13,17 @@ export class ListChartsOfAccount {
   static readonly type = '[TransactionsState] ListChartsOfAccount';
   constructor(public readonly payload?: any) {}
 }
+
+export class listFinancialTransaction {
+  static readonly type = '[TransactionsState] listFinancialTransaction';
+  constructor(public readonly payload?: any) {}
+}
+export class listCollectionVoucher {
+  static readonly type = '[TransactionsState] listCollectionVoucher';
+  constructor(public readonly payload?: any) {}
+}
+
+export class listBankReconciliation {
+  static readonly type = '[TransactionsState] listBankReconciliation';
+  constructor(public readonly payload?: any) {}
+}

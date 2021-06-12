@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Voucher } from 'src/app/models/voucher';
 import { TransactionsEndpoints } from './transactions.endpoint';
 
@@ -11,14 +10,6 @@ export class TransactionsApiService {
 
   contentType = 'Content-Type';
   contentApplication = 'application/json';
-
-  listVoucher(): Observable<Voucher> {
-    return this.http.get<Voucher>(TransactionsEndpoints.listVoucher).pipe(
-      map((value: any) => {
-        return value.reduce((a, x) => ({ ...a, [x.value]: x.name }), {});
-      })
-    );
-  }
 
   createVoucher(voucher: Voucher): Observable<Voucher> {
     const headers = new HttpHeaders().set(
@@ -34,5 +25,26 @@ export class TransactionsApiService {
   }
   getChartsOfAccount(): Observable<any> {
     return this.http.post<any>(TransactionsEndpoints.listChartsOfAccount, null);
+  }
+  getVoucherList(): Observable<any> {
+    return this.http.post<any>(TransactionsEndpoints.listVoucher, null);
+  }
+  getFinancialTransaction(): Observable<any> {
+    return this.http.post<any>(
+      TransactionsEndpoints.listFinancialTransaction,
+      null
+    );
+  }
+  getCollectionVoucher(): Observable<any> {
+    return this.http.post<any>(
+      TransactionsEndpoints.listCollectionVoucher,
+      null
+    );
+  }
+  getBankReconciliation(): Observable<any> {
+    return this.http.post<any>(
+      TransactionsEndpoints.listBankReconciliation,
+      null
+    );
   }
 }

@@ -1,2 +1,38 @@
 <app-voucher-form></app-voucher-form>
-<!-- <app-voucher-list></app-voucher-list> -->
+<ExtPanel extname="home"
+  padding="10 10 10 2"
+  layout="fit"
+  fitToParent="true">
+  <ExtGrid [store]="stored">
+    <ExtColumn text="Date"
+      dataIndex="Date"
+      width="200"></ExtColumn>
+    <ExtColumn text="SequenceNo"
+      dataIndex="SequenceNo"
+      width="200"></ExtColumn>
+    <ExtColumn text="ChequeNo"
+      dataIndex="ChequeNo"
+      width="200"></ExtColumn>
+    <ExtColumn text="Payed To/Received"
+      dataIndex="PayedToReceived"
+      width="200"></ExtColumn>
+    <ExtColumn text="Purpose"
+      dataIndex="Purpose"
+      width="200"></ExtColumn>
+    <ExtColumn text="Description"
+      dataIndex="Description"
+      width="200"></ExtColumn>
+    <ExtColumn text="OwnerCostCenter"
+      dataIndex="OwnerCostCenter"
+      width="200"></ExtColumn>
+    <ExtColumn text="VoucherType"
+      dataIndex="VoucherType"
+      width="200"></ExtColumn>
+    <ExtColumn text="Amount"
+      dataIndex="Amount"
+      width="200"></ExtColumn>
+    <ExtColumn text="PostedFromOperation"
+      dataIndex="PostedFromOperation"
+      width="200"></ExtColumn>
+  </ExtGrid>
+</ExtPanel>
