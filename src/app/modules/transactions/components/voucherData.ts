@@ -1,0 +1,28 @@
+export const gridData = [
+  {
+    id: 1,
+    Date: 12 - 12 - 2020,
+    SequenceNumber: 1012,
+    ChequeNumber: 34234,
+    PayedToReceived: 'user',
+    Purpose: 'Annual leave',
+    Description: 'Annual leave and severance',
+    OwnerCostCenter: 'HO-01',
+    voucherType: 'type',
+    Amount: '342234',
+    PostedFromOperation: 'Payment Voucher',
+  },
+  {
+    id: 2,
+    Date: 12 - 12 - 2020,
+    SequenceNumber: 1012,
+    ChequeNumber: 34234,
+    PayedToReceived: 'user2',
+    Purpose: 'Annual leave',
+    Description: 'Annual leave and severance',
+    OwnerCostCenter: 'HO-02',
+    voucherType: 'type',
+    Amount: '342234',
+    PostedFromOperation: 'Payment Voucher',
+  },
+];

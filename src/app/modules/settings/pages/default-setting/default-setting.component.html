@@ -1,18 +1,108 @@
-<ExtContainer padding="10" layout="fit" fitToParent="true">
-  <ExtFormpanel
-    [shadow]="true"
-    [layout]="{ type: 'vbox', align: 'left' }"
-    [bodyPadding]="10"
-    [defaults]="{ labelAlign: 'left', labelTextAlign: 'right' }"
-  >
-    <ExtContainerfield
-      [label]="'Name'"
-      [layout]="isPhone ? 'vbox' : 'vbox'"
-      [defaults]="{ labelAlign: 'bottom' }"
-    >
-      <ExtTextfield [label]="'First'"></ExtTextfield>
-      <ExtTextfield [label]="'Middle'"></ExtTextfield>
-      <ExtTextfield [label]="'Last'"></ExtTextfield>
-    </ExtContainerfield>
-  </ExtFormpanel>
-</ExtContainer>
+<div class="ml-10 divide-y-2 divide-gray-200 divide-solid">
+  <div class="mt-4 mb-4 ml-10">
+    <p class="text-2xl">Default Settings</p>
+  </div>
+  <div class="flex flex-row ml-10 mt-6">
+    <div class="mt-8 flex-1">
+      <p class="text-xl mt-2">General Settings</p>
+      <p class="mt-4 text-xs">General Settings Description</p>
+    </div>
+    <div class="flex-1 mt-2">
+      <form [formGroup]="generalSettingsForm">
+        <ExtContainer [width]="width"
+          layout="fit"
+          fitToParent="true">
+          <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
+            <ExtFieldset [title]="''"
+              [defaults]="{ labelAlign: 'placeholder' }">
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Income Summery Account"
+                  value=""
+                  required
+                  formControlName="incomeSummeryAccount" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Closing Capital Account"
+                  value=""
+                  formControlName="closingCapitalAccount" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Default Cost Center"
+                  value=""
+                  formControlName="defaultCostCenter" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Inter Branch Control Account"
+                  value=""
+                  formControlName="interBranchControlAccount" />
+              </mat-form-field>
+            </ExtFieldset>
+            <ExtButton [margin]="'0 0 0 0'"
+              [text]="'Save'"
+              (tap)="onSubmitGeneralSettingsForm()">
+            </ExtButton>
+          </ExtFormpanel>
+        </ExtContainer>
+      </form>
+    </div>
+  </div>
+  <div class="flex flex-row ml-10 mt-1">
+    <div class="mt-8 flex-1">
+      <p class="text-xl mt-2">Fixed Asset Settings</p>
+      <p class="mt-4 text-xs">Fixed Asset Settings Description</p>
+    </div>
+    <div class="flex-1 mt-2">
+      <form [formGroup]="fixedAssetSettingsForm">
+        <ExtContainer [width]="width"
+          layout="fit"
+          fitToParent="true">
+          <ExtFormpanel [padding]="20"
+            [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
+            <ExtFieldset [title]="''"
+              [defaults]="{ labelAlign: 'placeholder' }">
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Default Cost Center"
+                  value=""
+                  required
+                  formControlName="defaultCostCenter" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Default Voucher Type"
+                  value=""
+                  formControlName="defaultVoucherType" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Gain On Disposal Account"
+                  value=""
+                  formControlName="gainOnDisposalAccount" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Loss On Disposal Account"
+                  value=""
+                  formControlName="lossOnDisposalAccount" />
+              </mat-form-field>
+              <mat-form-field class="w-2/3 flex justify-center">
+                <input matInput
+                  placeholder="Cash Account"
+                  value=""
+                  formControlName="cashAccount" />
+              </mat-form-field>
+            </ExtFieldset>
+            <ExtButton [margin]="'0 0 0 0'"
+              [text]="'Save'"
+              (tap)="onSubmitFixedAssetSettingsForm()">
+            </ExtButton>
+          </ExtFormpanel>
+        </ExtContainer>
+      </form>
+    </div>
+  </div>
+</div>

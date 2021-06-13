@@ -5,6 +5,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { environment } from 'src/environments/environment';
@@ -26,6 +27,7 @@ import { LayoutModule } from './layouts/layout.module';
     MatGridListModule,
     NgxsModule.forFeature([]),
     NgxPermissionsModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   providers: [{ provide: 'environment', useValue: environment }],
   bootstrap: [AppComponent],

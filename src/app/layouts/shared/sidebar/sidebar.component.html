@@ -1,1 +1,56 @@
-<mat-nav-list class="app-side-nav"> </mat-nav-list>
+<mat-nav-list class="app-side-nav">
+  <div class="subsystem-card">
+    <div class="header">
+      <h2>IFMS</h2>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>Transactions</h2>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions">
+    Voucher
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions/financialtransactions">
+    Financial Transactions
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions/chartsofaccount">
+    Chart Of Account
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions/collectionvoucher">
+    Collection Voucher
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/transactions/bankreconciliation">
+    Bank Reconciliation
+  </a>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>Settings</h2>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/settings">
+    Default Settings
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/settings/vouchertype">
+    Voucher Type
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/settings/costcode">
+    Cost Code
+  </a>
+  <a mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/settings/cashier">
+    Cashier
+  </a>
+</mat-nav-list>
