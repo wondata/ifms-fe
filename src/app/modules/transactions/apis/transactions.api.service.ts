@@ -47,4 +47,20 @@ export class TransactionsApiService {
       null
     );
   }
+  getPaymentVoucher(): Observable<any> {
+    return this.http.post<any>(TransactionsEndpoints.listPaymentVoucher, null);
+  }
+
+  createPaymentVoucher(paymentVoucher: any): Observable<any> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<Voucher>(
+      TransactionsEndpoints.createPaymentVoucher,
+      paymentVoucher,
+      { headers }
+    );
+  }
 }

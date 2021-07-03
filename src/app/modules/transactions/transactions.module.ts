@@ -15,6 +15,7 @@ import { BankReconciliationComponent } from './pages/bankreconciliation/bankreco
 import { ChartOfAccountComponent } from './pages/chartofaccount/chartofaccount.component';
 import { CollectionVoucherComponent } from './pages/collectionvoucher/collectionvoucher.component';
 import { FinancialTransactionComponent } from './pages/financialtransactions/financialtransactions.component';
+import { PaymentVoucherComponent } from './pages/paymentVoucher/paymentvoucher.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
 import { TransactionsState } from './store/states/transactions.state';
 import { TransactionsRoutingModule } from './transactions.routing';
@@ -28,6 +29,7 @@ import { TransactionsRoutingModule } from './transactions.routing';
     ChartOfAccountComponent,
     CollectionVoucherComponent,
     FinancialTransactionComponent,
+    PaymentVoucherComponent,
   ],
   imports: [
     NgxsModule.forFeature([TransactionsState]),

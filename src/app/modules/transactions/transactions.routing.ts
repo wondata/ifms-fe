@@ -5,6 +5,7 @@ import { BankReconciliationComponent } from './pages/bankreconciliation/bankreco
 import { ChartOfAccountComponent } from './pages/chartofaccount/chartofaccount.component';
 import { CollectionVoucherComponent } from './pages/collectionvoucher/collectionvoucher.component';
 import { FinancialTransactionComponent } from './pages/financialtransactions/financialtransactions.component';
+import { PaymentVoucherComponent } from './pages/paymentVoucher/paymentvoucher.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
 const routes: Routes = [
   {
@@ -50,6 +51,16 @@ const routes: Routes = [
   {
     path: 'bankreconciliation',
     component: BankReconciliationComponent,
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      permissions: {
+        only: [],
+      },
+    },
+  },
+  {
+    path: 'paymentVoucher',
+    component: PaymentVoucherComponent,
     canActivate: [NgxPermissionsGuard],
     data: {
       permissions: {

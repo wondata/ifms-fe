@@ -27,3 +27,12 @@ export class listBankReconciliation {
   static readonly type = '[TransactionsState] listBankReconciliation';
   constructor(public readonly payload?: any) {}
 }
+export class listPaymentVoucher {
+  static readonly type = '[TransactionsState] listPaymentVoucher';
+  constructor(public readonly payload?: any) {}
+}
+
+export class CreatePaymentVoucher {
+  static readonly type = '[TransactionsState] CreatePaymentVoucher';
+  constructor(public readonly payload?: Voucher) {}
+}

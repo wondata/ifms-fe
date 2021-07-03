@@ -5,11 +5,13 @@ import { catchError, tap } from 'rxjs/operators';
 import { Voucher } from '../../../../models/voucher';
 import { TransactionsApiService } from '../../apis/transactions.api.service';
 import {
+  CreatePaymentVoucher,
   CreateVoucher,
   listBankReconciliation,
   ListChartsOfAccount,
   listCollectionVoucher,
   listFinancialTransaction,
+  listPaymentVoucher,
   ListVoucher,
 } from './../action/transactions.action';
 
@@ -20,6 +22,8 @@ export interface TransactionsStateModel {
   listFinancialTransaction: any;
   listCollectionVoucher: any;
   listBankReconciliation: any;
+  listPaymentVoucher: any;
+  createPaymentVoucher: any;
   loading: boolean;
 }
 
@@ -32,6 +36,8 @@ export interface TransactionsStateModel {
     listCollectionVoucher: undefined,
     listBankReconciliation: undefined,
     listChartsOfAccount: undefined,
+    listPaymentVoucher: undefined,
+    createPaymentVoucher: undefined,
     loading: undefined,
   },
 })
@@ -61,6 +67,11 @@ export class TransactionsState {
     state: TransactionsStateModel
   ): any {
     return state.listBankReconciliation;
+  }
+  @Selector() public static listPaymentVoucher(
+    state: TransactionsStateModel
+  ): any {
+    return state.listPaymentVoucher;
   }
   @Selector() public static listVoucher(state: TransactionsStateModel): any {
     return state.listVoucher;
@@ -153,6 +164,38 @@ export class TransactionsState {
     return this.TransactionsApiService.getBankReconciliation().pipe(
       tap((item: any) => {
         patchState({ listBankReconciliation: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(listPaymentVoucher) listPaymentVoucher(
+    { patchState }: StateContext<TransactionsStateModel>,
+    payload: listPaymentVoucher
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.TransactionsApiService.getPaymentVoucher().pipe(
+      tap((item: any) => {
+        patchState({ listPaymentVoucher: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(CreatePaymentVoucher) createPaymentVoucher(
+    { patchState }: StateContext<TransactionsStateModel>,
+    payload: any
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.TransactionsApiService.createPaymentVoucher(payload).pipe(
+      tap((result: any) => {
+        patchState({ createVoucher: result, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

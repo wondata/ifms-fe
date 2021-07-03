@@ -7,4 +7,6 @@ export const TransactionsEndpoints = {
   listFinancialTransaction: `${environment.urls.api}/api/ChartOfAccount/GetFinantialTransaction`,
   listCollectionVoucher: `${environment.urls.api}/api/ChartOfAccount/GetCollectionVouchers`,
   listBankReconciliation: `${environment.urls.api}/api/ChartOfAccount/GetBankReconciliation`,
+  listPaymentVoucher: `${environment.urls.api}/api/Voucher/GetPaymentVouchers`,
+  createPaymentVoucher: `${environment.urls.api}/api/ChartOfAccount/savePaymentVoucher`,
 };
