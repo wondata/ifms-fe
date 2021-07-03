@@ -31,3 +31,8 @@ export class ListCashier {
   static readonly type = '[SettingsState] ListCashier';
   constructor(public readonly payload?: any) {}
 }
+
+export class CreateVoucherType {
+  static readonly type = '[SettingsState] CreateVoucherType';
+  constructor(public readonly payload?: any) {}
+}

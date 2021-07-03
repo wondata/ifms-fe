@@ -3,15 +3,16 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
+  Cashier,
   FixedAssetSettings,
   GeneralSettings,
   VoucherType,
-  Cashier,
 } from '../../../../models/defaultSettings';
 import { SettingsApiService } from '../../apis/settings.api.service';
 import {
   CreateFixedAssetsSettings,
   CreateGeneralSettings,
+  CreateVoucherType,
   ListCashier,
   ListCostCode,
   ListVoucherTypes,
@@ -21,6 +22,7 @@ export interface SettingStateModel {
   voucherType: VoucherType;
   createGeneralSettings: GeneralSettings;
   createFixedAssetSettings: FixedAssetSettings;
+  createVoucherType: any;
   listCostCode: any;
   listCashier: any;
   listVoucherType: any;
@@ -33,6 +35,7 @@ export interface SettingStateModel {
     voucherType: undefined,
     loading: undefined,
     createGeneralSettings: undefined,
+    createVoucherType: undefined,
     createFixedAssetSettings: undefined,
     listCostCode: undefined,
     listCashier: undefined,
@@ -139,6 +142,22 @@ export class SettingState {
     return this.settingApiService.getCashier().pipe(
       tap((item: any) => {
         patchState({ listCashier: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(CreateVoucherType) createVoucherType(
+    { patchState }: StateContext<SettingStateModel>,
+    payload: any
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.settingApiService.createVoucherType(payload).pipe(
+      tap((result: any) => {
+        patchState({ createVoucherType: result, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

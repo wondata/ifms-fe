@@ -8,17 +8,19 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxsModule } from '@ngxs/store';
 import { ExtAngularModernModule } from '@sencha/ext-angular-modern';
 import { SettingsApiService } from './apis/settings.api.service';
+import { CashierComponent } from './components/cashier/cashier.component';
 import { CostCodeComponent } from './components/cost-code/cost-code.component';
+import { CashierPageComponent } from './pages/cashier-page/cashier-page.component';
 import { CostCodePageComponent } from './pages/cost-code/cost-code.component';
 import { DefaultSettingComponent } from './pages/default-setting/default-setting.component';
 import { VoucherTypeComponent } from './pages/voucher-type/voucher-type.component';
 import { SettingsRoutingModule } from './settings.routing';
 import { SettingState } from './store/states/setting.state';
-import { CashierPageComponent } from './pages/cashier/cashier.component';
 @NgModule({
   declarations: [
     DefaultSettingComponent,
     CostCodeComponent,
+    CashierComponent,
     CostCodePageComponent,
     VoucherTypeComponent,
     CashierPageComponent,

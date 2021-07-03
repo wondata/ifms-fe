@@ -62,4 +62,16 @@ export class SettingsApiService {
   getCashier(): Observable<any> {
     return this.http.post<any>(SettingsEndpoints.getCashier, null);
   }
+  createVoucherType(voucherType: any): Observable<any> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<any>(
+      SettingsEndpoints.createVoucherType,
+      voucherType,
+      { headers }
+    );
+  }
 }

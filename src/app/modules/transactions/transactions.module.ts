@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxsModule } from '@ngxs/store';
 import { ExtAngularModernModule } from '@sencha/ext-angular-modern';
 import { TransactionsApiService } from './apis/transactions.api.service';
+import { VoucherDetailComponent } from './components/voucher-detail/voucher-detail.component';
 import { VoucherFormComponent } from './components/voucher-form/voucher-form.component';
 import { VoucherListComponent } from './components/voucher-list/voucher-list.component';
 import { BankReconciliationComponent } from './pages/bankreconciliation/bankreconciliation.component';
@@ -20,6 +21,7 @@ import { TransactionsRoutingModule } from './transactions.routing';
 @NgModule({
   declarations: [
     VoucherListComponent,
+    VoucherDetailComponent,
     VoucherFormComponent,
     VoucherComponent,
     BankReconciliationComponent,

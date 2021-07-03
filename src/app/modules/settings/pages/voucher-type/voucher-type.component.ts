@@ -1,8 +1,12 @@
 declare var Ext: any;
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ListVoucherTypes } from '../../store/action/setting.action';
+import {
+  CreateVoucherType,
+  ListVoucherTypes,
+} from '../../store/action/setting.action';
 import { SettingState } from '../../store/states/setting.state';
 import { VoucherType } from './../../../../models/defaultSettings';
 @Component({
@@ -12,7 +16,33 @@ import { VoucherType } from './../../../../models/defaultSettings';
 })
 export class VoucherTypeComponent implements OnInit {
   @Select(SettingState.voucherType) listCostCode$: Observable<VoucherType>;
-  constructor(private readonly store: Store) {}
+  voucherTypeForm: FormGroup;
+
+  constructor(private readonly fb: FormBuilder, private readonly store: Store) {
+    this.voucherTypeForm = this.fb.group({
+      costCenter: [''],
+      voucherType: [''],
+      defaultAccount: [''],
+      balanceSide: [''],
+      startingNumber: [''],
+      endingNumber: [''],
+      currentNumber: [''],
+      numberOfDigits: [''],
+    });
+  }
+  onSubmitVoucherTypeForm(): void {
+    if (this.voucherTypeForm.valid) {
+      this.voucherTypeForm.markAsPristine();
+      this.store
+        .dispatch(new CreateVoucherType(this.voucherTypeForm.value))
+        .subscribe(() => {
+          Ext.toast('Successfully added Voucher Type');
+          this.store.dispatch(new ListVoucherTypes());
+        });
+    } else {
+      Ext.toast('All required fields should be filled!');
+    }
+  }
   stored: any;
   ngOnInit() {
     this.store.dispatch(new ListVoucherTypes());
