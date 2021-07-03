@@ -34,5 +34,10 @@ export class listPaymentVoucher {
 
 export class CreatePaymentVoucher {
   static readonly type = '[TransactionsState] CreatePaymentVoucher';
-  constructor(public readonly payload?: Voucher) {}
+  constructor(public readonly payload?: any) {}
+}
+
+export class CreateCollectionVoucher {
+  static readonly type = '[TransactionsState] CreateCollectionVoucher';
+  constructor(public readonly payload?: any) {}
 }

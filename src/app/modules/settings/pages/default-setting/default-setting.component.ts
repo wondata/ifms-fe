@@ -46,9 +46,7 @@ export class DefaultSettingComponent implements OnInit {
       this.generalSettingsForm.markAsPristine();
       this.store
         .dispatch(new CreateGeneralSettings(this.generalSettingsForm.value))
-        .subscribe(() => {
-          Ext.toast('Successfully added General Settings');
-        });
+        .subscribe(() => {});
     } else {
       Ext.toast('All required fields should be filled!');
     }

@@ -63,4 +63,17 @@ export class TransactionsApiService {
       { headers }
     );
   }
+
+  createCollectionVoucher(collectionVoucher: any): Observable<any> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<Voucher>(
+      TransactionsEndpoints.createCollectionVoucher,
+      collectionVoucher,
+      { headers }
+    );
+  }
 }

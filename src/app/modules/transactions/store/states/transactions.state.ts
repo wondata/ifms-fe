@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Voucher } from '../../../../models/voucher';
 import { TransactionsApiService } from '../../apis/transactions.api.service';
 import {
+  CreateCollectionVoucher,
   CreatePaymentVoucher,
   CreateVoucher,
   listBankReconciliation,
@@ -24,6 +25,7 @@ export interface TransactionsStateModel {
   listBankReconciliation: any;
   listPaymentVoucher: any;
   createPaymentVoucher: any;
+  createCollectionVoucher: any;
   loading: boolean;
 }
 
@@ -38,6 +40,7 @@ export interface TransactionsStateModel {
     listChartsOfAccount: undefined,
     listPaymentVoucher: undefined,
     createPaymentVoucher: undefined,
+    createCollectionVoucher: undefined,
     loading: undefined,
   },
 })
@@ -196,6 +199,22 @@ export class TransactionsState {
     return this.TransactionsApiService.createPaymentVoucher(payload).pipe(
       tap((result: any) => {
         patchState({ createVoucher: result, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(CreateCollectionVoucher) createCollectionVoucher(
+    { patchState }: StateContext<TransactionsStateModel>,
+    payload: any
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.TransactionsApiService.createCollectionVoucher(payload).pipe(
+      tap((result: any) => {
+        patchState({ createCollectionVoucher: result, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

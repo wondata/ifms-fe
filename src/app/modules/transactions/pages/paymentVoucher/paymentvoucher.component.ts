@@ -38,7 +38,6 @@ export class PaymentVoucherComponent implements OnInit {
       this.store
         .dispatch(new CreatePaymentVoucher(this.paymentVoucherForm.value))
         .subscribe(() => {
-          Ext.toast('Successfully added PaymentVoucher');
           this.store.dispatch(new listPaymentVoucher());
         });
     } else {

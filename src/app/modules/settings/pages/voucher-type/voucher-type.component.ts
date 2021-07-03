@@ -36,7 +36,6 @@ export class VoucherTypeComponent implements OnInit {
       this.store
         .dispatch(new CreateVoucherType(this.voucherTypeForm.value))
         .subscribe(() => {
-          Ext.toast('Successfully added Voucher Type');
           this.store.dispatch(new ListVoucherTypes());
         });
     } else {
