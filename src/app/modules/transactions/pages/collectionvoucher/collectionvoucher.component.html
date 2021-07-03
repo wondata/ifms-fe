@@ -1,93 +1,89 @@
-<div>
-  <div class="max-w-xl container">
-    <form [formGroup]="collectionVoucherForm">
-      <ExtContainer layout="fit"
-        fitToParent="true">
-        <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
-          <ExtFieldset [title]="''"
-            [defaults]="{ labelAlign: 'placeholder' }">
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Voucher Type"
-                value=""
-                formControlName="VoucherType" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Date"
-                value=""
-                formControlName="Date" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Amount"
-                value=""
-                formControlName="Amount" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="ReceivedFrom"
-                value=""
-                formControlName="ReceivedFrom" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Purpose"
-                value=""
-                formControlName="Purpose" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Description"
-                value=""
-                formControlName="Description" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="ModeOfPayment"
-                value=""
-                formControlName="ModeOfPayment" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Project"
-                value=""
-                formControlName="Project" />
-            </mat-form-field>
-          </ExtFieldset>
-          <ExtButton [margin]="'0 0 0 0'"
-            [text]="'Save'"
-            (tap)="onSubmitCollectionVoucherForm()">
-          </ExtButton>
-        </ExtFormpanel>
-      </ExtContainer>
-    </form>
-  </div>
-  <div>
-    <ExtPanel extname="home"
-      padding="10 10 10 2"
-      layout="fit"
+<div class="max-w-xl container">
+  <form [formGroup]="collectionVoucherForm">
+    <ExtContainer layout="fit"
       fitToParent="true">
-      <ExtGrid [store]="stored">
-        <ExtColumn text="Date"
-          dataIndex="Date"
-          width="200"></ExtColumn>
-        <ExtColumn text="SequenceNo"
-          dataIndex="SequenceNo"
-          width="200"></ExtColumn>
-        <ExtColumn text="Checked"
-          dataIndex="Checked"
-          width="200"></ExtColumn>
-        <ExtColumn text="ChequeNo"
-          dataIndex="ChequeNo"
-          width="200"></ExtColumn>
-        <ExtColumn text="Received From"
-          dataIndex="ReceivedFrom"
-          width="200"></ExtColumn>
-        <ExtColumn text="Purpose"
-          dataIndex="Purpose"
-          width="200"></ExtColumn>
-      </ExtGrid>
-    </ExtPanel>
-  </div>
+      <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
+        <ExtFieldset [title]="''"
+          [defaults]="{ labelAlign: 'placeholder' }">
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Voucher Type"
+              value=""
+              formControlName="VoucherType" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Date"
+              value=""
+              formControlName="Date" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Amount"
+              value=""
+              formControlName="Amount" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="ReceivedFrom"
+              value=""
+              formControlName="ReceivedFrom" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Purpose"
+              value=""
+              formControlName="Purpose" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Description"
+              value=""
+              formControlName="Description" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="ModeOfPayment"
+              value=""
+              formControlName="ModeOfPayment" />
+          </mat-form-field>
+          <mat-form-field class="w-2/3 flex justify-center">
+            <input matInput
+              placeholder="Project"
+              value=""
+              formControlName="Project" />
+          </mat-form-field>
+        </ExtFieldset>
+        <ExtButton [margin]="'0 0 0 0'"
+          [text]="'Save'"
+          (tap)="onSubmitCollectionVoucherForm()">
+        </ExtButton>
+      </ExtFormpanel>
+    </ExtContainer>
+  </form>
 </div>
+<ExtPanel extname="home"
+  padding="10 10 10 2"
+  layout="fit"
+  fitToParent="true">
+  <ExtGrid [store]="stored">
+    <ExtColumn text="Date"
+      dataIndex="Date"
+      width="200"></ExtColumn>
+    <ExtColumn text="SequenceNo"
+      dataIndex="SequenceNo"
+      width="200"></ExtColumn>
+    <ExtColumn text="Checked"
+      dataIndex="Checked"
+      width="200"></ExtColumn>
+    <ExtColumn text="ChequeNo"
+      dataIndex="ChequeNo"
+      width="200"></ExtColumn>
+    <ExtColumn text="Received From"
+      dataIndex="ReceivedFrom"
+      width="200"></ExtColumn>
+    <ExtColumn text="Purpose"
+      dataIndex="Purpose"
+      width="200"></ExtColumn>
+  </ExtGrid>
+</ExtPanel>
