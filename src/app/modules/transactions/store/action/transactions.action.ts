@@ -1,8 +1,19 @@
 import { Voucher } from 'src/app/models/voucher';
 
+
 export class ListVoucher {
   static readonly type = '[TransactionsState] ListVoucher';
   constructor(public readonly payload?: Voucher) {}
+}
+
+export class GetVoucherHeaderDetail {
+  static readonly type = '[TransactionsState] GetVoucherHeaderDetail';
+  constructor(public payload: any) {}
+}
+
+export class GetVoucherDetail {
+  static readonly type = '[TransactionsState] GetVoucherDetail';
+  constructor(public payload: any) {}
 }
 
 export class CreateVoucher {

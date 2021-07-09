@@ -14,11 +14,14 @@ export class FinancialTransactionComponent implements OnInit {
   listFinancialTransaction$: Observable<any>;
   constructor(private readonly store: Store) {}
   stored: any;
+
   ngOnInit() {
     this.store.dispatch(new listFinancialTransaction());
+
     this.listFinancialTransaction$.subscribe((stateValue: any) => {
+
       this.stored = Ext.create('Ext.data.Store', {
-        fields: ['Name', 'Code'],
+        fields: ['Name', 'Code', 'Date'],
         data: stateValue,
       });
     });

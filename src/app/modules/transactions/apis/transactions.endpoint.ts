@@ -1,10 +1,13 @@
 import { environment } from './../../../../environments/environment';
 
 export const TransactionsEndpoints = {
-  listVoucher: `${environment.urls.api}/api/ChartOfAccount/GetTransactionHeaders`,
-  createVoucher: `${environment.urls.api}/api/ChartOfAccount/SaveVoucher`,
+  listVoucher: `${environment.urls.api}/api/Voucher/GetAllVoucherList`,
+  getVoucherHeaderDetail: `${environment.urls.api}/api/Voucher/GetVoucherHeaderDetails`,
+  getVoucherDetail: `${environment.urls.api}/api/Voucher/GetVoucherDetail`,
+
+  listFinancialTransaction: `${environment.urls.api}/api/Transaction/GetTransactionHeaders`,
+  createVoucher: `${environment.urls.api}/api/Voucher/SaveVoucher`,
   listChartsOfAccount: `${environment.urls.api}/api/ChartOfAccount/GetChartOfAccount`,
-  listFinancialTransaction: `${environment.urls.api}/api/Transaction/GetTransactionDetails`,
   listCollectionVoucher: `${environment.urls.api}/api/Voucher/GetCollectionVouchers`,
   listBankReconciliation: `${environment.urls.api}/api/ChartOfAccount/GetBankReconciliation`,
   listPaymentVoucher: `${environment.urls.api}/api/Voucher/GetPaymentVouchers`,

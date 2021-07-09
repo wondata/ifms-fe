@@ -1,6 +1,6 @@
 export interface Voucher {
   OwnerCostCenter: string;
-  VoucherType: string;
+  VoucherType: [];
   Date: Date;
   SequenceNo: string;
   OtherReferenceNo: string;

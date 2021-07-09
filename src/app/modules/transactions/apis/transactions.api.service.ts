@@ -1,8 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Voucher } from 'src/app/models/voucher';
+import { VoucherDetail } from 'src/app/models/voucherdetail';
 import { TransactionsEndpoints } from './transactions.endpoint';
+
 
 @Injectable()
 export class TransactionsApiService {
@@ -10,6 +13,10 @@ export class TransactionsApiService {
 
   contentType = 'Content-Type';
   contentApplication = 'application/json';
+
+  httpOptions = {
+    headers: new HttpHeaders({})
+  }
 
   createVoucher(voucher: Voucher): Observable<Voucher> {
     const headers = new HttpHeaders().set(
@@ -29,6 +36,51 @@ export class TransactionsApiService {
   getVoucherList(): Observable<any> {
     return this.http.post<any>(TransactionsEndpoints.listVoucher, null);
   }
+
+  getVoucherHeaderDetail(voucher: Voucher): Observable<any> {
+
+    return this.http.post<Voucher[]>(TransactionsEndpoints.getVoucherHeaderDetail, voucher)
+    .pipe(
+      map((data) => {
+        //  return this.mapToVoucherDetailViewModel(data);
+        return data;
+      }),
+    );
+
+  }
+
+  getVoucherDetail(voucher: VoucherDetail): Observable<any> {
+
+    return this.http.post<VoucherDetail[]>(TransactionsEndpoints.getVoucherDetail, voucher)
+    .pipe(
+      map((data) => {
+        return data;
+      }),
+    );
+
+  }
+
+  mapToVoucherDetailViewModel(positions: VoucherDetail[]): VoucherDetail[] {
+    const result = [] as VoucherDetail[];
+    if (positions === null || positions === undefined) return result;
+
+    positions.forEach((element) => {
+      const vm = {} as VoucherDetail;
+        vm.Id = element.Id;
+        vm.VoucherHeaderId = element.VoucherHeaderId;
+        vm.SNo = element.SNo;
+        vm.CostCenterId= element.CostCenterId;
+        vm.CaseId = element.CaseId;
+        vm.CostCodeId = element.CostCodeId;
+        vm.DebitAmount = element.DebitAmount;
+        vm.CreditAmount = element.CreditAmount;
+
+      result.push(vm);
+    });
+
+    return result;
+  }
+
   getFinancialTransaction(): Observable<any> {
     return this.http.post<any>(
       TransactionsEndpoints.listFinancialTransaction,

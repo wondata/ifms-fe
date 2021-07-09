@@ -3,37 +3,41 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Voucher } from '../../../../models/voucher';
+import { VoucherDetail } from '../../../../models/VoucherDetail';
 import { TransactionsApiService } from '../../apis/transactions.api.service';
 import {
   CreateCollectionVoucher,
   CreatePaymentVoucher,
-  CreateVoucher,
-  listBankReconciliation,
+  CreateVoucher, GetVoucherDetail, GetVoucherHeaderDetail, listBankReconciliation,
   ListChartsOfAccount,
   listCollectionVoucher,
   listFinancialTransaction,
   listPaymentVoucher,
-  ListVoucher,
+  ListVoucher
 } from './../action/transactions.action';
 
 export interface TransactionsStateModel {
-  createVoucher: Voucher;
-  listVoucher: Voucher;
-  listChartsOfAccount: any;
-  listFinancialTransaction: any;
-  listCollectionVoucher: any;
-  listBankReconciliation: any;
-  listPaymentVoucher: any;
-  createPaymentVoucher: any;
-  createCollectionVoucher: any;
-  loading: boolean;
-}
+    createVoucher: Voucher;
+    listVoucher: Voucher;
+    getVoucherHeaderDetail: Voucher;
+    getVoucherDetail : VoucherDetail;
+    listChartsOfAccount: any;
+    listFinancialTransaction: any;
+    listCollectionVoucher: any;
+    listBankReconciliation: any;
+    listPaymentVoucher: any;
+    createPaymentVoucher: any;
+    createCollectionVoucher: any;
+    loading: boolean;
+  }
 
 @State<TransactionsStateModel>({
   name: 'TransactionsState',
   defaults: {
     createVoucher: undefined,
     listVoucher: undefined,
+    getVoucherHeaderDetail: undefined,
+    getVoucherDetail : undefined,
     listFinancialTransaction: undefined,
     listCollectionVoucher: undefined,
     listBankReconciliation: undefined,
@@ -50,46 +54,97 @@ export class TransactionsState {
     private readonly TransactionsApiService: TransactionsApiService
   ) {}
 
-  @Selector() public static chartsOfAccount(
+  @Selector()
+  public static chartsOfAccount(
     state: TransactionsStateModel
   ): any {
     return state.listChartsOfAccount;
   }
 
-  @Selector() public static listFinancialTransaction(
+  @Selector()
+  public static listFinancialTransaction(
     state: TransactionsStateModel
   ): any {
     return state.listFinancialTransaction;
   }
-  @Selector() public static listCollectionVoucher(
+  @Selector()
+  public static listCollectionVoucher(
     state: TransactionsStateModel
   ): any {
     return state.listCollectionVoucher;
   }
-  @Selector() public static listBankReconciliation(
+  @Selector()
+  public static listBankReconciliation(
     state: TransactionsStateModel
   ): any {
     return state.listBankReconciliation;
   }
-  @Selector() public static listPaymentVoucher(
+  @Selector()
+  public static listPaymentVoucher(
     state: TransactionsStateModel
   ): any {
     return state.listPaymentVoucher;
   }
-  @Selector() public static listVoucher(state: TransactionsStateModel): any {
+  @Selector()
+  public static listVoucher(state: TransactionsStateModel): any {
     return state.listVoucher;
   }
+
+  @Selector()
+  public static getVoucherHeader(state: TransactionsStateModel): any {
+    return state.getVoucherHeaderDetail;
+  }
+
+  @Selector()
+  public static getVoucherDetail(state: TransactionsStateModel): any {
+    return state.getVoucherDetail;
+  }
+
+
+
   @Action(CreateVoucher) createVoucher(
     { patchState }: StateContext<TransactionsStateModel>,
-    payload: Voucher
-  ): any {
-    patchState({
-      loading: true,
+      payload: Voucher
+    ): any {
+      patchState({
+        loading: true,
     });
 
     return this.TransactionsApiService.createVoucher(payload).pipe(
       tap((result: Voucher) => {
         patchState({ createVoucher: result, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(GetVoucherHeaderDetail)
+  getVoucherHeaderDetail({ patchState }: StateContext<TransactionsStateModel>,
+      payload : GetVoucherHeaderDetail
+    ): any {
+      patchState({
+        loading: true,
+      });
+
+    return this.TransactionsApiService.getVoucherHeaderDetail(payload.payload).pipe(
+      tap((result: Voucher) => {
+        patchState({ getVoucherHeaderDetail: result, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(GetVoucherDetail)
+  getVoucherDetail({ patchState }: StateContext<TransactionsStateModel>,
+      payload : GetVoucherDetail
+    ): any {
+      patchState({
+        loading: true,
+      });
+
+    return this.TransactionsApiService.getVoucherDetail(payload.payload).pipe(
+      tap((result: any) => {
+        patchState({ getVoucherDetail: result.Data, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );
@@ -126,6 +181,7 @@ export class TransactionsState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
   @Action(listFinancialTransaction) listFinancialTransaction(
     { patchState }: StateContext<TransactionsStateModel>,
     payload: listFinancialTransaction
@@ -141,6 +197,7 @@ export class TransactionsState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
   @Action(listCollectionVoucher) listCollectionVoucher(
     { patchState }: StateContext<TransactionsStateModel>,
     payload: listCollectionVoucher
@@ -156,6 +213,7 @@ export class TransactionsState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
   @Action(listBankReconciliation) listBankReconciliation(
     { patchState }: StateContext<TransactionsStateModel>,
     payload: listBankReconciliation
