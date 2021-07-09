@@ -7,6 +7,7 @@ import {
   FixedAssetSettings,
   GeneralSettings,
   VoucherType,
+  VoucherTypeSetting
 } from '../../../../models/defaultSettings';
 import { SettingsApiService } from '../../apis/settings.api.service';
 import {
@@ -16,7 +17,9 @@ import {
   ListCashier,
   ListCostCode,
   ListVoucherTypes,
+  ListVoucherTypeSetting
 } from './../action/setting.action';
+
 
 export interface SettingStateModel {
   voucherType: VoucherType;
@@ -26,6 +29,7 @@ export interface SettingStateModel {
   listCostCode: any;
   listCashier: any;
   listVoucherType: any;
+  listVoucherTypeSetting : any;
   loading: boolean;
 }
 
@@ -40,6 +44,7 @@ export interface SettingStateModel {
     listCostCode: undefined,
     listCashier: undefined,
     listVoucherType: undefined,
+    listVoucherTypeSetting : undefined,
   },
 })
 @Injectable()
@@ -48,6 +53,10 @@ export class SettingState {
 
   @Selector() public static voucherType(state: SettingStateModel): VoucherType {
     return state.voucherType;
+  }
+
+  @Selector() public static voucherTypeSetting(state: SettingStateModel): VoucherTypeSetting {
+    return state.listVoucherTypeSetting;
   }
 
   @Selector() public static listCashier(state: SettingStateModel): Cashier {
@@ -67,6 +76,8 @@ export class SettingState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
+
 
   @Action(CreateGeneralSettings) createGeneralSettings(
     { patchState }: StateContext<SettingStateModel>,
@@ -131,6 +142,18 @@ export class SettingState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
+   @Action(ListVoucherTypeSetting) getVoucherTypeSetting({
+    patchState,
+  }: StateContext<SettingStateModel>): any {
+    return this.settingApiService.getVoucherTypeSetting().pipe(
+      tap((item: any) => {
+        patchState({ listVoucherTypeSetting: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
   @Action(ListCashier) listCashier(
     { patchState }: StateContext<SettingStateModel>,
     payload: ListCashier

@@ -13,25 +13,24 @@ import { TransactionsState } from '../../store/states/transactions.state';
   styleUrls: ['./voucher.component.scss'],
 })
 export class VoucherComponent implements OnInit {
-    rightResizable = {split: true,  edges: 'west'};
-    isPhone = Ext.os.is.Phone;
-    top = !this.isPhone ? '10' : null;
-    left = !this.isPhone ? '10' : null;
-    width = !this.isPhone ? '400' : null;
-    height = !this.isPhone ? '600' : null;
+      rightResizable = {split: true,  edges: 'west'};
+      isPhone = Ext.os.is.Phone;
+      top = !this.isPhone ? '10' : null;
+      left = !this.isPhone ? '10' : null;
+      width = !this.isPhone ? '400' : null;
+      height = !this.isPhone ? '600' : null;
 
-    voucherForm: FormGroup;
+      voucherForm: FormGroup;
 
-    disabled:boolean = false;
-    formRef:any;
-    selRef:any;
-    grid:any;
-    grid2:any;
+      disabled:boolean = false;
+      formRef:any;
+      selRef:any;
+      grid:any;
+      grid2:any;
 
      @Select(TransactionsState.listVoucher) listVoucher$: Observable<any>;
      @Select(TransactionsState.getVoucherHeader) getVoucherHeader$: Observable<any>;
      @Select(TransactionsState.getVoucherDetail) getVoucherDetail$: Observable<any>;
-
 
 
      constructor(private readonly store: Store, private readonly fb: FormBuilder) {
@@ -52,7 +51,6 @@ export class VoucherComponent implements OnInit {
 
       this.listVoucher$.subscribe((data) => {
         this.stored.setData(data);
-        console.log(data);
       });
 
 
@@ -122,7 +120,6 @@ export class VoucherComponent implements OnInit {
         });
         this.getVoucherDetail$.subscribe((data) => {
           this.voucherDetail.setData(data);
-          console.log(data);
         });
 
       }

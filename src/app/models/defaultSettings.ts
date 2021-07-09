@@ -24,6 +24,17 @@ export interface VoucherType {
   numberOfDigits: Number;
 }
 
+export interface VoucherTypeSetting {
+  costCenter: string;
+  voucherType: string;
+  defaultAccount: string;
+  accountTitle: string;
+  balanceSide: string;
+  startingNumber: Number;
+  currentNumber: Number;
+  numberOfDigits: Number;
+}
+
 export interface voucherType {}
 export interface CostCode {
   ID: string;

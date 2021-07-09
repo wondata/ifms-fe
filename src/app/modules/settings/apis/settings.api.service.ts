@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import {
   FixedAssetSettings,
   GeneralSettings,
-  voucherType,
+  voucherType
 } from './../../../models/defaultSettings';
 import { SettingsEndpoints } from './settings.endpoint';
 
@@ -59,6 +59,11 @@ export class SettingsApiService {
   getVoucherType(): Observable<any> {
     return this.http.post<any>(SettingsEndpoints.getVoucherType, null);
   }
+
+  getVoucherTypeSetting(): Observable<any> {
+    return this.http.post<any>(SettingsEndpoints.listVoucherTypeSetting, null);
+  }
+
   getCashier(): Observable<any> {
     return this.http.post<any>(SettingsEndpoints.getCashier, null);
   }

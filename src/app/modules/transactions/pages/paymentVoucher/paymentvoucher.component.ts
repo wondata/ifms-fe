@@ -5,7 +5,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import {
   CreatePaymentVoucher,
-  listPaymentVoucher,
+  listPaymentVoucher
 } from '../../store/action/transactions.action';
 import { TransactionsState } from '../../store/states/transactions.state';
 @Component({
@@ -14,43 +14,68 @@ import { TransactionsState } from '../../store/states/transactions.state';
   styleUrls: ['./paymentvoucher.component.scss'],
 })
 export class PaymentVoucherComponent implements OnInit {
-  @Select(TransactionsState.listPaymentVoucher)
-  listPaymentVoucher$: Observable<any>;
-  paymentVoucherForm: FormGroup;
+    @Select(TransactionsState.listPaymentVoucher)
+    listPaymentVoucher$: Observable<any>;
+    paymentVoucherForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder, private readonly store: Store) {
-    this.paymentVoucherForm = this.fb.group({
-      VoucherType: [''],
-      Date: [''],
-      AuthorizedDate: [''],
-      Amount: [''],
-      PaidTo: [''],
-      Purpose: [''],
-      Description: [''],
-      Account: [''],
-      ModeOfPayment: [''],
-      Project: [''],
-    });
-  }
-  onSubmitPaymentVoucherForm(): void {
-    if (this.paymentVoucherForm.valid) {
-      this.paymentVoucherForm.markAsPristine();
-      this.store
-        .dispatch(new CreatePaymentVoucher(this.paymentVoucherForm.value))
-        .subscribe(() => {
-          this.store.dispatch(new listPaymentVoucher());
-        });
-    } else {
-      Ext.toast('All required fields should be filled!');
-    }
-  }
-  stored: any;
-  ngOnInit() {
-    this.store.dispatch(new listPaymentVoucher());
-    this.listPaymentVoucher$.subscribe((stateValue: any) => {
-      this.stored = Ext.create('Ext.data.Store', {
-        data: stateValue,
+    stored = Ext.create('Ext.data.Store', {
+
       });
-    });
-  }
+    grid : any;
+    formRef : any;
+
+    constructor(private readonly fb: FormBuilder, private readonly store: Store) {
+      this.paymentVoucherForm = this.fb.group({
+        VoucherType: [''],
+        Date: [''],
+        AuthorizedDate: [''],
+        Amount: [''],
+        PaidTo: [''],
+        Purpose: [''],
+        Description: [''],
+        Account: [''],
+        ModeOfPayment: [''],
+        Project: [''],
+      });
+    }
+
+    onSubmitPaymentVoucherForm(): void {
+      if (this.paymentVoucherForm.valid) {
+        this.paymentVoucherForm.markAsPristine();
+        this.store
+          .dispatch(new CreatePaymentVoucher(this.paymentVoucherForm.value))
+          .subscribe(() => {
+            this.store.dispatch(new listPaymentVoucher());
+          });
+      } else {
+        Ext.toast('All required fields should be filled!');
+      }
+    }
+
+    ngOnInit() {
+      this.store.dispatch(new listPaymentVoucher());
+
+      this.listPaymentVoucher$.subscribe((stateValue) => {
+        this.stored.setData(stateValue);
+      });
+    }
+
+    gridReady = (event) => {
+        this.grid = event.cmp;
+      }
+
+    onReady = (event) => {
+        this.formRef = event.cmp;
+
+    }
+    onChilddoubletap = ({  sender, location }) => {
+        const record = location.record;
+        const {id , ...selectedRecord} = record.data;
+
+        //  this.store.dispatch(new GetVoucherHeaderDetail(selectedRecord))
+        //   .subscribe((result) => {
+        //     this.loadForm(result);
+        //   });
+
+      }
 }

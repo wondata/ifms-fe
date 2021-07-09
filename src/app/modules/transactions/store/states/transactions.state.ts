@@ -160,7 +160,7 @@ export class TransactionsState {
 
     return this.TransactionsApiService.getChartsOfAccount().pipe(
       tap((item: any) => {
-        patchState({ listChartsOfAccount: item.Data, loading: false });
+        patchState({ listChartsOfAccount: item, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );

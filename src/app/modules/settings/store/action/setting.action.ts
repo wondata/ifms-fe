@@ -1,12 +1,17 @@
 import {
   FixedAssetSettings,
   GeneralSettings,
-  VoucherType,
+  VoucherType
 } from '../../../../models/defaultSettings';
 
 export class ListVoucherTypes {
   static readonly type = '[SettingsState] ListVoucherType';
   constructor(public readonly payload?: VoucherType) {}
+}
+
+export class ListVoucherType {
+  static readonly type = '[SettingsState] ListVoucherType';
+  constructor(public readonly payload?: any) {}
 }
 
 export class CreateGeneralSettings {
@@ -23,10 +28,14 @@ export class ListCostCode {
   static readonly type = '[SettingsState] ListCostCode';
   constructor(public readonly payload?: any) {}
 }
-export class ListVoucherType {
-  static readonly type = '[SettingsState] ListVoucherType';
+
+
+export class ListVoucherTypeSetting {
+  static readonly type = '[SettingsState] ListVoucherTypeSetting';
   constructor(public readonly payload?: any) {}
 }
+
+
 export class ListCashier {
   static readonly type = '[SettingsState] ListCashier';
   constructor(public readonly payload?: any) {}
