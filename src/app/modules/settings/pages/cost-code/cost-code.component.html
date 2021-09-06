@@ -1,13 +1,63 @@
-<ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
+<ExtPanel extname="home" padding="10 10 10 2" layout="fit" fitToParent="true">
   <ExtGrid [store]="stored">
-    <ExtColumn text="Name"
-      dataIndex="Name"
-      width="200"></ExtColumn>
-    <ExtColumn text="Code"
-      dataIndex="Code"
-      width="200"></ExtColumn>
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
+
+    <ExtColumn text="Name" dataIndex="Name" width="200"></ExtColumn>
+    <ExtColumn text="Code" dataIndex="Code" width="200"></ExtColumn>
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+        tools: {
+          centered: false,
+          edit: {
+            margin: '0 50 0 0',
+            handler: this.onEdit
+          },
+          trash: {
+            handler: this.onDelete
+          }
+        }
+      }"
+    ></ExtGridcolumn>
   </ExtGrid>
+
+  <ExtDialog [displayed]="isDialogShowing" [padding]="0">
+    <ExtFormpanel
+      (ready)="onFormReady($event)"
+      padding="0 20 20 20"
+      layout="fit"
+      fitToParent="true"
+      title="Add Cost Code"
+      [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }"
+    >
+      <ExtFieldset [defaults]="{ labelAlign: 'placeholder' }">
+        <ExtHiddenfield name="Id"></ExtHiddenfield>
+        <ExtTextfield name="Name" label="Name" required="true"></ExtTextfield>
+        <ExtTextfield name="Code" label="Code" required="true"></ExtTextfield>
+      </ExtFieldset>
+
+      <ExtToolbar
+        [docked]="'bottom'"
+        [layout]="{ type: 'hbox', pack: 'right' }"
+      >
+        <ExtButton
+          text="Cancel"
+          [margin]="'0 10 0 0'"
+          (tap)="cancelForm($event)"
+        ></ExtButton>
+        <ExtButton [text]="'Save'" (tap)="saveForm($event)"></ExtButton>
+      </ExtToolbar>
+    </ExtFormpanel>
+  </ExtDialog>
 </ExtPanel>

@@ -1,13 +1,63 @@
-<ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
-  <ExtGrid [store]="stored">
-    <ExtColumn text="Name"
+<ExtPanel extname="home" padding="10 10 10 2" layout="fit" fitToParent="true">
+  <ExtGrid
+    [store]="stored"
+    (ready)="onGridReady($event)"
+    (childdoubletap)="onChilddoubletap($event)"
+    [plugins]="{ grideditable: {enableDeleteButton: true, triggerEvent: ''}, gridfilters: true }"
+  >
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
+
+    <ExtTextcolumn
+      text="Id"
+      flex="1"
+      hidden="true"
+      dataIndex="Id"
+      editable="true"
+      [editor]="{ xtype: 'hiddenfield' }"
+    ></ExtTextcolumn>
+    <ExtGridcolumn
+      text="Name"
       dataIndex="FullName"
-      width="200"></ExtColumn>
-    <ExtColumn text="email"
-      dataIndex="email"
-      width="200"></ExtColumn>
+      width="200"
+      editable="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Account"
+      dataIndex="SubsidiaryAccountId"
+      [editor]="subsidiaryEditor"
+      [renderer]="this.renderColumn"
+      editable="true"
+      width="200"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="UserName"
+      dataIndex="UserId"
+      width="200"
+      [editor]="userEditor"
+      [renderer]="this.renderColumn"
+      editable="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+            tools:{
+                centered: true,
+              trash: {
+                handler: this.onDelete
+              }
+            }
+          }"
+    ></ExtGridcolumn>
   </ExtGrid>
 </ExtPanel>

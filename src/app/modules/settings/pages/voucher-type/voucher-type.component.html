@@ -1,14 +1,96 @@
+<ExtContainer layout="fit" fitToParent="true">
+  <ExtGrid
+    [store]="gridStore"
+    layout="fit"
+    (ready)="onGridReady($event)"
+    (childdoubletap)="onChilddoubletap($event)"
+    [plugins]="{
+      grideditable: { enableDeleteButton: true, triggerEvent: '' },
+      gridfilters: true
+    }"
+  >
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
 
-  <ExtContainer layout="fit" fitToParent="true">
-      <ExtGrid [store]="stored" layout="fit">
-        <ExtColumn text="CostCenter" tpl='{CostCenter.Name}'  ></ExtColumn>
-        <ExtColumn text="VoucherType"  tpl='{VoucherType.Name}'  ></ExtColumn>
-        <ExtColumn text="DefaultAccount" tpl='{SubsidiaryAccount.Name}' ></ExtColumn>
-        <ExtColumn text="AccountTitle"  dataIndex="AccountTitle" ></ExtColumn>
-        <ExtColumn text="BalanceSide"  dataIndex="BalanceSide" ></ExtColumn>
-        <ExtColumn text="StartingNumber" dataIndex="StartingNumber" ></ExtColumn>
-        <ExtColumn text="CurrentNumber"  dataIndex="CurrentNumber" ></ExtColumn>
-        <ExtColumn text="NumberOfDigits" dataIndex="NumberOfDigits" ></ExtColumn>
-      </ExtGrid>
-      </ExtContainer>
-
+    <ExtTextcolumn
+      text="Id"
+      flex="1"
+      hidden="true"
+      dataIndex="Id"
+      editable="true"
+      [editor]="{ xtype: 'hiddenfield' }"
+    ></ExtTextcolumn>
+    <ExtGridcolumn
+      text="Cost Center"
+      dataIndex="CostCenterId"
+      editable="true"
+      [width]="250"
+      [editor]="costCenterEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Voucher Type"
+      dataIndex="VoucherTypeId"
+      editable="true"
+      [editor]="voucherEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Default Account"
+      dataIndex="DefaultAccountId"
+      [editor]="defaultAccountEditor"
+      [renderer]="this.renderColumn"
+      editable="true"
+      width="200"
+    ></ExtGridcolumn>
+    <ExtColumn
+      text="Account Title"
+      tpl="{SubsidiaryAccount.Name}"
+      width="200"
+    ></ExtColumn>
+    <ExtColumn
+      text="Balance Side"
+      dataIndex="BalanceSideId"
+      width="200"
+      editable="true"
+      [editor]="balanceEditor"
+      [renderer]="this.renderColumn"
+    ></ExtColumn>
+    <ExtNumbercolumn
+      text="StartingNumber"
+      dataIndex="StartingNumber"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtNumbercolumn
+      text="CurrentNumber"
+      dataIndex="CurrentNumber"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtNumbercolumn
+      text="NumberOfDigits"
+      dataIndex="NumberOfDigits"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+        tools: {
+          centered: true,
+          trash: {
+            handler: this.onDelete
+          }
+        }
+      }"
+    ></ExtGridcolumn>
+  </ExtGrid>
+</ExtContainer>

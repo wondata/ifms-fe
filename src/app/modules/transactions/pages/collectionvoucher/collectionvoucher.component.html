@@ -1,156 +1,38 @@
 <ExtContainer padding="10" layout="fit" fitToParent="true" >
 
- <ExtGrid [store]="stored" layout="fit" (childdoubletap)="onChilddoubletap($event)" (ready)="gridReady($event)">
+ <ExtGrid [store]="stored" layout="fit"
+     (ready)="onGridReady($event)"
+     [plugins]="{ grideditable: {enableDeleteButton: true, triggerEvent: ''}, gridfilters: true }">
+      <ExtToolbar docked="top">
+          <ExtButton text="Add" ui="action raised round" iconCls="x-fa fa-plus" iconAlign="left" alignSelf="right"
+              (tap)="onAdd()">
+          </ExtButton>
+      </ExtToolbar>
         <ExtGridcolumn text="Id" dataIndex="Id" hidden="true" flex="1" [editor]="{ xtype: 'hiddenfield' }" ></ExtGridcolumn>
-        <ExtGridcolumn text="Date" dataIndex="Date" formatter='date("M,d/Y")' ></ExtGridcolumn>
+        <ExtDatecolumn text="Date" flex="1" dataIndex="Date" format="M d, Y" editable="true" width="250" ></ExtDatecolumn>
         <ExtGridcolumn text="SequenceNo" dataIndex="DocumentNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Checked"   dataIndex="IsChecked"  ></ExtGridcolumn>
+        <ExtGridcolumn text="Checked?"  dataIndex="IsChecked" value="true"  [renderer]="this.renderBoolean" ></ExtGridcolumn>
         <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Received From" dataIndex="PayedToReceivedFrom"  ></ExtGridcolumn>
-        <ExtGridcolumn text="Purpose" dataIndex="Purpose"  ></ExtGridcolumn>
-        <ExtGridcolumn text="Description" dataIndex="Description" ></ExtGridcolumn>
-        <ExtGridcolumn text="CostCenter"  tpl='{CostCenter.Name}' ></ExtGridcolumn>
-        <ExtGridcolumn text="VoucherType"  tpl='{VoucherType.Name}' ></ExtGridcolumn>
+        <ExtGridcolumn text="Received From" dataIndex="PayedToReceivedFrom" ></ExtGridcolumn>
+        <ExtGridcolumn text="Purpose" dataIndex="PurposeTemplateId" editable="true"  [editor]="purposeEditor" [renderer]="this.renderColumn" ></ExtGridcolumn>
+        <ExtGridcolumn text="Description" dataIndex="Description" editable="true"  [editor]="descriptionEditor" [renderer]="this.renderColumn"></ExtGridcolumn>
+        <ExtGridcolumn text="CostCenter" tpl='{CostCenter.Name}' ></ExtGridcolumn>
         <!-- <ExtGridcolumn text="VoucherType" tpl='{VoucherType.Name}'  ></ExtGridcolumn> -->
-        <ExtGridcolumn text="Amount"  dataIndex="Amount" ></ExtGridcolumn>
+        <ExtGridcolumn text="Paid To" flex="1" dataIndex="PayedToReceivedFrom"  editable="true" [displayed]="false" ></ExtGridcolumn>
+        <ExtGridcolumn text="Account" flex="1" dataIndex="AccountId"  [editor]="accountEditor" editable="true"  [displayed]="false" ></ExtGridcolumn>
+        <ExtGridcolumn text="Mode Of Payment" flex="1" dataIndex="ModeOfPaymentId" [editor]="modePaymentEditor"  editable="true" [displayed]="false" ></ExtGridcolumn>
+        <ExtGridcolumn text="Payment Doc. No"  dataIndex="ChequeNo" editable="true" [displayed]="true" ></ExtGridcolumn>
+        <ExtGridcolumn text="Project" flex="1" dataIndex="Project"  editable="true" [editor]="projectEditor" hideMode="display"  [displayed]="false"   ></ExtGridcolumn>
+
+        <ExtGridcolumn text="VoucherType"  dataIndex="VoucherTypeId" editable="true"  [editor]="voucherEditor" [renderer]="this.renderColumn"></ExtGridcolumn>
+        <ExtGridcolumn text="Amount"  dataIndex="Amount" editable="true"></ExtGridcolumn>
+        <ExtGridcolumn text="Operations" flex="1" [cell]="{
+            tools:{
+                centered: false,
+              trash: {
+                handler: this.deleteCollectionVoucher
+              }
+            }
+          }"></ExtGridcolumn>
       </ExtGrid>
       </ExtContainer>
-
-<!--
-
-<ExtContainer padding="10" layout="hbox" fitToParent="true" >
-  <ExtPanel
-        [title]="''"
-        [docked]="'left'"
-        [width]="'fit'"
-        [shadow]="true"
-        [resizable]="{split: true, edges: 'east', dynamic: true}"
-    >
-    <ExtContainer padding="10" layout="fit" fitToParent="true">
-
-      <ExtGrid [store]="stored" layout="fit" (childdoubletap)="onChilddoubletap($event)" (ready)="gridReady($event)">
-        <ExtGridcolumn text="Id" dataIndex="Id" hidden="true" flex="1" [editor]="{ xtype: 'hiddenfield' }" ></ExtGridcolumn>
-        <ExtGridcolumn text="Date" dataIndex="Date" formatter='date("M,d/Y")' ></ExtGridcolumn>
-        <ExtGridcolumn text="SequenceNo" dataIndex="DocumentNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Checked"   dataIndex="IsChecked"  ></ExtGridcolumn>
-        <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Received From" dataIndex="PayedToReceivedFrom"  ></ExtGridcolumn>
-        <ExtGridcolumn text="Purpose" dataIndex="Purpose"  ></ExtGridcolumn>
-        <ExtGridcolumn text="Description" dataIndex="Description" ></ExtGridcolumn>
-        <ExtGridcolumn text="CostCenter"  tpl='{CostCenter.Name}' ></ExtGridcolumn>
-        <ExtGridcolumn text="VoucherType"  tpl='{VoucherType.Name}' ></ExtGridcolumn>
-        <ExtGridcolumn text="Amount"  dataIndex="Amount" ></ExtGridcolumn>
-      </ExtGrid>
-
-    </ExtContainer>
-  </ExtPanel>
-  <ExtPanel
-        [docked]="'top'"
-        resizable="{split: true,  edges: 'south', dynamic: true}"
-    >
-      <ExtContainer
-          [platformConfig]="{
-              phone: { layout: 'vbox' },
-              '!phone': { layout: 'vbox', padding: 10 }
-          }"
-          >
-            <ExtFormpanel
-                (ready) ="onReady($event)"
-                width="fit"
-                role="voucherForm"
-              >
-
-              <ExtContainer  layout="vbox" fitToParent="true">
-                <ExtFieldset
-                    [title]="'Collection Voucher'"
-                    [width]="'320'"
-                    [defaults]="{ labelAlign: 'placeholder' }"
-                >
-                    <ExtTextfield
-                      [label]="'Voucher Type'"
-                      [required]="true"
-                      [placeholder]="'This field is required'"
-                      name="VoucherTypeId"
-                    >
-                    </ExtTextfield>
-                     <ExtTextfield
-                        [label]="'Date'"
-                        [labelAlign]="'placeholder'"
-                        [required]="true"
-                        [placeholder]="'This field is required'"
-                        name="Date"
-                        >
-                      </ExtTextfield>
-
-                    <ExtTextfield
-                        [label]="'Amount'"
-                        [required]="true"
-                        [placeholder]="'This field is required'"
-                        name="Amount"
-                    >
-                    </ExtTextfield>
-
-                    <ExtTextfield
-                        [label]="'Received From'"
-                        [required]="true"
-                        [placeholder]="'This field is required'"
-                        name="PayedToReceivedFrom"
-                    >
-                    </ExtTextfield>
-
-                    <ExtTextfield
-                      [label]="'Purpose'"
-                      [required]="true"
-                      [placeholder]="'This field is required'"
-                      name="Purpose"
-                    ></ExtTextfield>
-
-                     <ExtTextfield
-                      [label]="'Description'"
-                      [required]="true"
-                      [placeholder]="'This field is required'"
-                      name="Description"
-                     ></ExtTextfield>
-
-                    <ExtTextfield
-                      [label]="'Mode Of Payment'"
-                      [required]="true"
-                      [placeholder]="'This field is required'"
-                      name="ModeOfPaymentId"
-                    >
-                    </ExtTextfield>
-
-                     <ExtTextfield
-                      [label]="'Project'"
-                      [required]="true"
-                      [placeholder]="'This field is required'"
-
-                      name="Project"
-                  ></ExtTextfield>
-
-                    </ExtFieldset>
-
-                    <ExtToolbar
-                        [docked]="'bottom'"
-                        [height]="'50px'"
-                        [layout]="{ type: 'hbox', pack: 'right' }"
-                      >
-                         <ExtButton
-                            [text]="disabled ? 'Enable All' : 'Disable All'"
-                            (tap)="toggleDisabled($event)"
-                        >
-                        </ExtButton>
-                        <ExtButton
-                            [text]="'Save'"
-                            (tap)="reset($event)"
-                        ></ExtButton>
-
-
-                  </ExtToolbar>
-
-                  </ExtContainer>
-                </ExtFormpanel>
-        </ExtContainer>
-    </ExtPanel>
-</ExtContainer>
- -->
