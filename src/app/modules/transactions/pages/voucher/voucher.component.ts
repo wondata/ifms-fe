@@ -21,6 +21,7 @@ import { TransactionsState } from '../../store/states/transactions.state';
 export class VoucherComponent implements OnInit {
       rightResizable = {split: true,  edges: 'west'};
       isPhone = Ext.os.is.Phone;
+
       top = !this.isPhone ? '10' : null;
       left = !this.isPhone ? '10' : null;
       width = !this.isPhone ? '400' : null;
@@ -263,21 +264,26 @@ export class VoucherComponent implements OnInit {
     onChangeVoucherType = ({ sender, newValue, oldValue }) => {
       var voucher_name = '';
 
-      if(this.formRef.nameRefs.CostCenterId._value == null || this.formRef.nameRefs.CostCenterId._value == '' ) {
-        this.formRef.nameRefs.VoucherTypeId.reset ();
+      if(this.formRef.nameRefs.CostCenterId._value === undefined ) {
+         this.formRef.nameRefs.VoucherTypeId.reset ();
          this.snackService.open('Cost Center Should be Selected!', '200', "error");
+         return;
       }else{
-         this.store.dispatch(new GetVoucherNumber (this.formRef.nameRefs.CostCenterId._value, newValue));
-           this.getVoucherHeader$.subscribe((data) => {
-             if(data != null){
-                this.formRef.setValues({ReferenceNo : data[0].ReferenceNo});
-                this.formRef.setValues({DocumentNo : data[0].ReferenceNo});
-             }
-
-            });
            this.voucherData.filter(x => x.Id == newValue ).forEach(x => {
             voucher_name = x.Name;
           });
+
+          if(this.formRef.nameRefs.ReferenceNo._value && this.formRef.nameRefs.CostCenterId._value !== "" ){
+            this.store.dispatch(new GetVoucherNumber (this.formRef.nameRefs.CostCenterId._value, newValue));
+            this.getVoucherNumber$.subscribe((data) => {
+             if(data !== undefined){
+                this.formRef.setValues({ReferenceNo : data});
+                this.formRef.setValues({DocumentNo : data});
+             }
+
+            });
+          }
+
           if(voucher_name !== ''){
             switch(voucher_name){
                 case 'CSI':
@@ -457,6 +463,7 @@ export class VoucherComponent implements OnInit {
         }else{
           this.store.dispatch(new SaveVoucher( voucherHeaderPost));
           this.saveVoucher$.subscribe( (result) => {
+            debugger
             if (result.ResponseStatus === "Success") {
               this.snackService.open(result.Message, result.ResponseStatus, "success")
             } else {
@@ -513,6 +520,7 @@ export class VoucherComponent implements OnInit {
     }
 
     onSelectionChange = (grid, records, selecting, selection) => {
+
       let record = records[0].data;
       if(record.Id !== null){
         this.selectedVoucherDetail = record.Id;
@@ -522,6 +530,7 @@ export class VoucherComponent implements OnInit {
         this.selectedVoucherDetail = null;
         // this.formRef2.nameRefs.deleteButton.setDisabled();
       }
+
     };
 
      onDelete = (event) => {
@@ -554,7 +563,7 @@ export class VoucherComponent implements OnInit {
       if(key === event.TAB){
 
         if(col === 'Remark'){
-          // debugger
+
           this.onAddRow(event);
         }else if(col === 'SubsidiaryAccountId'){
           let SubId = field._value;
@@ -562,18 +571,13 @@ export class VoucherComponent implements OnInit {
             account_name = x.Name;
             account_id = x.Id;
           });
-
           // editor.$activeRow.cells[4].setValue(account_id) ;
           editor.$activeRow.cells[4].setRawValue(account_name) ;
           // editor.$activeRow.cells[4].setValue(account_name) ;
           this.voucherDetail.setFields({'SubsidiaryAccount': account_name});
-          // this.voucherDetail.setFields({'SubsidiaryAccountId': account_id});
-          debugger
-
-
+          this.voucherDetail.setFields({'SubsidiaryAccountId': account_id});
 
         }
-
       }else if ( key === event.ENTER){
         // Enter Key
         if(col === 'Remark'){
@@ -603,8 +607,8 @@ export class VoucherComponent implements OnInit {
           location.cell.row.cells[4].setRawValue(account_name);
           location.cell.row.cells[4].setRecord(account_name);
 
-          location.child.cells[4].setRecord(account_name);
           location.child.cells[4].setRawValue(account_name);
+          location.child.cells[4].setRecord(account_name);
           // location.child.cells[4].setColumn(account_name);
           this.voucherDetail.setFields({'SubsidiaryAccount': account_name});
           debugger
@@ -616,9 +620,6 @@ export class VoucherComponent implements OnInit {
 
       this.checkBalance(this.voucherDetail, 'DebitAmount');
       this.checkBalance(this.voucherDetail, 'CreditAmount');
-
-
-
 
       debugger
 

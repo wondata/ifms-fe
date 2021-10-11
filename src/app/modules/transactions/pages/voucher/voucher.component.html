@@ -361,7 +361,11 @@
         </ExtButton>
       </ExtFormpanel>
 
-      <!--   (edit)="onEdit($event)" rowedit: { autoConfirm: false } -->
+      <!--   (edit)="onEdit($event)" rowedit: { autoConfirm: false }
+         [listeners]="{
+            selectionchange: this.onSelectionChange
+          }"
+      -->
       <ExtContainer padding="10" layout="fit" flex="2" fitToParent="true">
         <ExtGrid
           [store]="voucherDetail"
@@ -376,9 +380,6 @@
             summaryrow: true,
             gridsummaryrow: true,
             gridcellediting: true
-          }"
-          [listeners]="{
-            selectionchange: this.onSelectionChange
           }"
         >
           <ExtToolbar

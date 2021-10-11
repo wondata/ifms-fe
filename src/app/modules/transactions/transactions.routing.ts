@@ -5,8 +5,10 @@ import { BankReconciliationComponent } from './pages/bankreconciliation/bankreco
 import { ChartOfAccountComponent } from './pages/chartofaccount/chartofaccount.component';
 import { CollectionVoucherComponent } from './pages/collectionvoucher/collectionvoucher.component';
 import { FinancialTransactionComponent } from './pages/financialtransactions/financialtransactions.component';
+import { PaymentApprovalComponent } from './pages/payment-approval/payment-approval.component';
 import { PaymentVoucherComponent } from './pages/paymentVoucher/paymentvoucher.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -61,6 +63,16 @@ const routes: Routes = [
   {
     path: 'paymentVoucher',
     component: PaymentVoucherComponent,
+    canActivate: [NgxPermissionsGuard],
+    data: {
+      permissions: {
+        only: [],
+      },
+    },
+  },
+  {
+    path: 'paymentApproval',
+    component: PaymentApprovalComponent,
     canActivate: [NgxPermissionsGuard],
     data: {
       permissions: {

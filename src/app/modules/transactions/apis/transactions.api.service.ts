@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LookupModel, PaymentVoucher, VoucherHeader, VoucherHeaderPost } from 'src/app/models/defaultSettings';
+import { ChartOfAccountModel, LookupModel, PaymentVoucher, VoucherHeader, VoucherHeaderPost } from 'src/app/models/defaultSettings';
 import { Voucher } from 'src/app/models/voucher';
 import { VoucherDetail } from 'src/app/models/voucherdetail';
 import { TransactionsEndpoints } from './transactions.endpoint';
@@ -34,6 +34,20 @@ export class TransactionsApiService {
   getChartsOfAccount(): Observable<any> {
     return this.http.post<any>(TransactionsEndpoints.listChartsOfAccount, null);
   }
+
+  getChildChartsOfAccounts(item: ChartOfAccountModel): Observable<any> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
+    );
+
+    return this.http.post<Voucher>(
+      TransactionsEndpoints.getChildChartsOfAccount,
+      item,
+      { headers }
+    );
+  }
+
   getVoucherList(): Observable<any> {
     return this.http.post<any>(TransactionsEndpoints.listVoucher, null);
   }
@@ -119,11 +133,20 @@ export class TransactionsApiService {
     );
   }
   getBankReconciliation(): Observable<any> {
-    return this.http.post<any>(
-      TransactionsEndpoints.listBankReconciliation,
-      null
-    );
+    return this.http.post<any>( TransactionsEndpoints.listBankReconciliation, null);
   }
+  getSettelementHeaders(): Observable<any> {
+    return this.http.post<any>( TransactionsEndpoints.getSettelementHeaders, null);
+  }
+
+  getSlaAccount(): Observable<any> {
+    return this.http.post<any>(TransactionsEndpoints.getSlaAccount, null);
+  }
+
+  getPaymentHeaders(): Observable<any> {
+    return this.http.post<any>(TransactionsEndpoints.getPaymentHeaders, null);
+  }
+
   getPaymentVoucher(): Observable<any> {
     return this.http.post<any>(TransactionsEndpoints.listPaymentVoucher, null);
   }
@@ -155,13 +178,31 @@ export class TransactionsApiService {
     );
   }
 
-  getVoucherNumber(CostCenterId: string, VoucherTypeId: string): Observable<any[]> {
-    return this.http.post<any[]>(TransactionsEndpoints.getVoucherNumber, {"CostCenterId" :CostCenterId , "VoucherTypeId" :VoucherTypeId })
-    .pipe(
-      map((data) => {
-        return data;
-      }),
+  getVoucherNumber(CostCenterId: string, VoucherTypeId: string): Observable<any> {
+    const headers = new HttpHeaders().set(
+      this.contentType,
+      this.contentApplication
     );
+
+    return this.http.post<Voucher>(
+      TransactionsEndpoints.getVoucherNumber,
+      {"CostCenterId" :CostCenterId , "VoucherTypeId" :VoucherTypeId },
+      { headers }
+    );
+
+  }
+
+  saveChildChartAccount(chartAccount: ChartOfAccountModel): Observable<any> {
+      const headers = new HttpHeaders().set(
+        this.contentType,
+        this.contentApplication
+      );
+
+      return this.http.post<ChartOfAccountModel>(
+        TransactionsEndpoints.saveChildChartAccount,
+        chartAccount,
+        { headers }
+      );
   }
 
   createPaymentVoucher(paymentVoucher: PaymentVoucher): Observable<any> {
@@ -318,7 +359,11 @@ export class TransactionsApiService {
       TransactionsEndpoints.saveVoucher,
       voucherHeaderPost,
       { headers }
-    );
+    ) .pipe(
+      map((data) => {
+        return data;
+      }),);
+
   }
 
 

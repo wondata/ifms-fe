@@ -77,7 +77,13 @@
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799",
     "activityBarBadge.background": "#000000",
-    "activityBarBadge.foreground": "#e7e7e7"
+    "activityBarBadge.foreground": "#e7e7e7",
+    "editorGroup.border": "#464646",
+    "panel.border": "#464646",
+    "sash.hoverBorder": "#464646",
+    "sideBar.border": "#464646",
+    "statusBarItem.remoteBackground": "#2d2d2d",
+    "statusBarItem.remoteForeground": "#e7e7e7"
   },
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,

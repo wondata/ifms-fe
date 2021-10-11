@@ -48,6 +48,19 @@ export interface SubsidiaryAccount {
   RunningBalance: Number;
 }
 
+export interface StatusResponse {
+  Message: string;
+  ResponseStatus: string;
+}
+
+export interface ChartOfAccountModel {
+    Id: string;
+    Name?: string;
+    Code?: string;
+    Type: string;
+    ParentId?: string;
+    CompanyId? : string;
+}
 
 
 export interface voucherType {}

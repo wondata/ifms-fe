@@ -1,38 +1,137 @@
-<ExtContainer padding="10" layout="fit" fitToParent="true" >
+<ExtContainer padding="10" layout="fit" fitToParent="true">
+  <ExtGrid
+    [store]="stored"
+    layout="fit"
+    (ready)="onGridReady($event)"
+    (childdoubletap)="onChilddoubletap($event)"
+    [plugins]="{
+      grideditable: { enableDeleteButton: true, triggerEvent: '' },
+      gridfilters: true
+    }"
+  >
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
+    <ExtGridcolumn
+      text="Id"
+      dataIndex="Id"
+      hidden="true"
+      flex="1"
+      [editor]="{ xtype: 'hiddenfield' }"
+    ></ExtGridcolumn>
+    <ExtDatecolumn
+      text="Date"
+      flex="1"
+      dataIndex="Date"
+      format="M d, Y"
+      editable="true"
+      width="250"
+    ></ExtDatecolumn>
+    <ExtGridcolumn text="SequenceNo" dataIndex="DocumentNo"></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Checked?"
+      dataIndex="IsChecked"
+      value="true"
+      [renderer]="this.renderBoolean"
+    ></ExtGridcolumn>
+    <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo"></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Received From"
+      dataIndex="PayedToReceivedFrom"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Purpose"
+      dataIndex="PurposeTemplateId"
+      editable="true"
+      [editor]="purposeEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Description"
+      dataIndex="Description"
+      editable="true"
+      [editor]="descriptionEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="CostCenter"
+      dataIndex="CostCenterId"
+      editable="true"
+      [editor]="projectEditor"
+      [renderer]="this.renderColumn"
+    >
+    </ExtGridcolumn>
+    <!-- <ExtGridcolumn text="VoucherType" tpl='{VoucherType.Name}'  ></ExtGridcolumn> -->
+    <ExtGridcolumn
+      text="Paid To"
+      flex="1"
+      dataIndex="PayedToReceivedFrom"
+      editable="true"
+      [displayed]="false"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Account"
+      flex="1"
+      dataIndex="AccountId"
+      [editor]="accountEditor"
+      editable="true"
+      [displayed]="false"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Mode Of Payment"
+      flex="1"
+      dataIndex="ModeOfPaymentId"
+      [editor]="modePaymentEditor"
+      editable="true"
+      [displayed]="false"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Payment Doc. No"
+      dataIndex="ChequeNo"
+      editable="true"
+      [displayed]="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Project"
+      flex="1"
+      dataIndex="Project"
+      editable="true"
+      [editor]="projectEditor"
+      hideMode="display"
+      [displayed]="false"
+    ></ExtGridcolumn>
 
- <ExtGrid [store]="stored" layout="fit"
-     (ready)="onGridReady($event)"
-     [plugins]="{ grideditable: {enableDeleteButton: true, triggerEvent: ''}, gridfilters: true }">
-      <ExtToolbar docked="top">
-          <ExtButton text="Add" ui="action raised round" iconCls="x-fa fa-plus" iconAlign="left" alignSelf="right"
-              (tap)="onAdd()">
-          </ExtButton>
-      </ExtToolbar>
-        <ExtGridcolumn text="Id" dataIndex="Id" hidden="true" flex="1" [editor]="{ xtype: 'hiddenfield' }" ></ExtGridcolumn>
-        <ExtDatecolumn text="Date" flex="1" dataIndex="Date" format="M d, Y" editable="true" width="250" ></ExtDatecolumn>
-        <ExtGridcolumn text="SequenceNo" dataIndex="DocumentNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Checked?"  dataIndex="IsChecked" value="true"  [renderer]="this.renderBoolean" ></ExtGridcolumn>
-        <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo" ></ExtGridcolumn>
-        <ExtGridcolumn text="Received From" dataIndex="PayedToReceivedFrom" ></ExtGridcolumn>
-        <ExtGridcolumn text="Purpose" dataIndex="PurposeTemplateId" editable="true"  [editor]="purposeEditor" [renderer]="this.renderColumn" ></ExtGridcolumn>
-        <ExtGridcolumn text="Description" dataIndex="Description" editable="true"  [editor]="descriptionEditor" [renderer]="this.renderColumn"></ExtGridcolumn>
-        <ExtGridcolumn text="CostCenter" tpl='{CostCenter.Name}' ></ExtGridcolumn>
-        <!-- <ExtGridcolumn text="VoucherType" tpl='{VoucherType.Name}'  ></ExtGridcolumn> -->
-        <ExtGridcolumn text="Paid To" flex="1" dataIndex="PayedToReceivedFrom"  editable="true" [displayed]="false" ></ExtGridcolumn>
-        <ExtGridcolumn text="Account" flex="1" dataIndex="AccountId"  [editor]="accountEditor" editable="true"  [displayed]="false" ></ExtGridcolumn>
-        <ExtGridcolumn text="Mode Of Payment" flex="1" dataIndex="ModeOfPaymentId" [editor]="modePaymentEditor"  editable="true" [displayed]="false" ></ExtGridcolumn>
-        <ExtGridcolumn text="Payment Doc. No"  dataIndex="ChequeNo" editable="true" [displayed]="true" ></ExtGridcolumn>
-        <ExtGridcolumn text="Project" flex="1" dataIndex="Project"  editable="true" [editor]="projectEditor" hideMode="display"  [displayed]="false"   ></ExtGridcolumn>
-
-        <ExtGridcolumn text="VoucherType"  dataIndex="VoucherTypeId" editable="true"  [editor]="voucherEditor" [renderer]="this.renderColumn"></ExtGridcolumn>
-        <ExtGridcolumn text="Amount"  dataIndex="Amount" editable="true"></ExtGridcolumn>
-        <ExtGridcolumn text="Operations" flex="1" [cell]="{
-            tools:{
-                centered: false,
-              trash: {
-                handler: this.deleteCollectionVoucher
-              }
-            }
-          }"></ExtGridcolumn>
-      </ExtGrid>
-      </ExtContainer>
+    <ExtGridcolumn
+      text="VoucherType"
+      dataIndex="VoucherTypeId"
+      editable="true"
+      [editor]="voucherEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Amount"
+      dataIndex="Amount"
+      editable="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+        tools: {
+          centered: false,
+          trash: {
+            handler: this.deleteCollectionVoucher
+          }
+        }
+      }"
+    ></ExtGridcolumn>
+  </ExtGrid>
+</ExtContainer>

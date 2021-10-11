@@ -150,7 +150,6 @@ export class PaymentVoucherComponent implements OnInit {
 
   }
 
-
     onChilddoubletap = ({ sender, location  }) => {
       this.gridEditableFormService.openGridEditableForm(this.grid, this.stored, location.recordIndex, this.editablePlugin);
 

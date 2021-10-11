@@ -1,0 +1,154 @@
+<ExtContainer padding="10" layout="fit" fitToParent="true">
+  <ExtPanel
+    [docked]="'left'"
+    [shadow]="true"
+    width="70%"
+    [resizable]="{ split: true, edges: 'east', dynamic: true }"
+  >
+    <ExtGrid
+      [store]="data_settlement"
+      height="100%"
+      [rowNumbers]="true"
+      [plugins]="{
+        grideditable: { enableDeleteButton: true, triggerEvent: '' },
+        gridfilters: true
+      }"
+    >
+      <ExtToolbar docked="top">
+        <ExtButton
+          text="Settled"
+          ui="action raised round"
+          iconCls="x-fa fa-check"
+          iconAlign="left"
+          alignSelf="right"
+          [margin]="'0 10 0 0'"
+        >
+        </ExtButton>
+        <ExtButton
+          text="Search"
+          ui="decline raised round "
+          [margin]="'10 0 10 0'"
+          iconCls="x-fa fa-search"
+          iconAlign="left"
+          alignSelf="right"
+          [margin]="'0 10 0 0'"
+        >
+        </ExtButton>
+      </ExtToolbar>
+
+      <ExtGridcolumn
+        text="Id"
+        dataIndex="Id"
+        hidden="true"
+        flex="1"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="CostCenter"
+        tpl="{CostCenter.Name}"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtGridcolumn
+        text="VoucherType"
+        tpl="{VoucherType.Name}"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="SequenceNo"
+        dataIndex="ReferenceeNo"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtDatecolumn
+        text="Transaction Date"
+        dataIndex="Date"
+        format="M d, Y"
+        width="120"
+      ></ExtDatecolumn>
+
+      <ExtDatecolumn
+        text="Settlement End Date"
+        dataIndex="SettlementEndDate"
+        format="M d, Y"
+        width="120"
+      ></ExtDatecolumn>
+
+      <ExtGridcolumn
+        text="Settled"
+        dataIndex="IsBalanced"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtGridcolumn
+        text="Payed To/ Received From"
+        dataIndex="PayedToReceivedFrom"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtGridcolumn
+        text="Amount"
+        dataIndex="Amount"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtGridcolumn
+        text="Purpose"
+        dataIndex="Purpose"
+        tpl="{PurposeTemplate.text}"
+        width="120"
+      ></ExtGridcolumn>
+
+      <ExtGridcolumn
+        text="Description"
+        dataIndex="Description"
+        width="120"
+      ></ExtGridcolumn>
+    </ExtGrid>
+  </ExtPanel>
+
+  <ExtPanel [resizable]="{ split: true, edges: 'east', dynamic: true }">
+    <ExtGrid
+      [store]="data_transaction"
+      height="100%"
+      (ready)="gridReady2($event)"
+      [rowNumbers]="true"
+      [plugins]="{
+        grideditable: { enableDeleteButton: true, triggerEvent: '' },
+        summaryrow: true,
+        gridfilters: true
+      }"
+    >
+      <ExtGridcolumn
+        text="Id"
+        dataIndex="Id"
+        hidden="false"
+        flex="1"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Cost Center"
+        tpl="{CostCenters.Name}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Account Code"
+        tpl="{ControlAccount.Code} - {SubsidiaryAccount.Code}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Account Title"
+        width="200"
+        tpl="{SubsidiaryAccount.Name}"
+      ></ExtGridcolumn>
+      <ExtTextcolumn
+        text="Debit Amount"
+        summary="sum"
+        dataIndex="DebitAmount"
+      ></ExtTextcolumn>
+      <ExtTextcolumn
+        text="Credit Amount"
+        summary="sum"
+        dataIndex="CreditAmount"
+      ></ExtTextcolumn>
+    </ExtGrid>
+  </ExtPanel>
+</ExtContainer>

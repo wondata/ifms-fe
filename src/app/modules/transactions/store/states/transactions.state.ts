@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { LookupModel, PaymentVoucher, VoucherHeader } from 'src/app/models/defaultSettings';
+import { LookupModel, PaymentVoucher, StatusResponse, VoucherHeader } from 'src/app/models/defaultSettings';
 import { Voucher } from '../../../../models/voucher';
 import { VoucherDetail } from '../../../../models/VoucherDetail';
 import { TransactionsApiService } from '../../apis/transactions.api.service';
 import {
-  AdjustTransaction, CreateCollectionVoucher, CreatePaymentVoucher, CreateVoucher,
-  DeleteCollectionVoucher, DeletePaymentVoucher, GetDefaultAccount, GetJVNumber, GetLookups, GetTransactionDetail,
-  GetVoucherDetail, GetVoucherHeaderDetail, GetVoucherNumber, ListAccounts, listBankReconciliation,
-  ListChartsOfAccount, listCollectionVoucher, ListCollectionVoucherType, ListCostCenter, listFinancialTransaction, ListModePayment,
-  listPaymentVoucher, ListPaymentVoucherType, ListPurposeTemplates, ListVoucher, ListVoucherType, PostTransaction, SaveVoucher,
-  UnPostTransaction, VoidTransaction, DeleteVoucherDetail, DeleteTransaction
+  AdjustTransaction, CreateCollectionVoucher, CreatePaymentVoucher, CreateVoucher, DeleteCollectionVoucher, DeletePaymentVoucher, DeleteTransaction, DeleteVoucherDetail, GetChildChartOfAccounts, GetDefaultAccount, GetJVNumber, GetLookups, GetTransactionDetail,
+  GetVoucherDetail, GetVoucherHeaderDetail, GetVoucherNumber, ListAccounts, ListBankReconciliation, ListChartsOfAccount, listCollectionVoucher, ListCollectionVoucherType, ListCostCenter, listFinancialTransaction, ListModePayment,
+  ListPaymentHeaders, listPaymentVoucher, ListPaymentVoucherType, ListPurposeTemplates, ListSettelementHeaders, ListSlaAccount, ListVoucher, ListVoucherType, PostTransaction, SaveChildChartAccount, SaveVoucher,
+  UnPostTransaction, VoidTransaction
 } from './../action/transactions.action';
 
 export interface TransactionsStateModel {
@@ -28,13 +26,18 @@ export interface TransactionsStateModel {
     deleteTransaction: VoucherHeader[];
     getJVNumber : any;
     getVoucherNumber : any;
-    saveVoucher: any;
+    saveVoucher: StatusResponse;
     deleteVoucherDetail : any;
     getDefaultAccount : any;
     listChartsOfAccount: any;
+    getChildChartOfAccounts : any;
+    saveChildChartAccount : any;
     listFinancialTransaction: any;
     listCollectionVoucher: any;
     listBankReconciliation: any;
+    listSettelementHeaders : any;
+    listSlaAccount: any;
+    listPaymentHeaders: any;
     listPaymentVoucher: any;
     listPurposeTemplates : any;
     listAccounts: any;
@@ -74,7 +77,12 @@ export interface TransactionsStateModel {
     listFinancialTransaction: undefined,
     listCollectionVoucher: undefined,
     listBankReconciliation: undefined,
+    listSettelementHeaders: undefined,
+    listSlaAccount: undefined,
+    listPaymentHeaders: undefined,
     listChartsOfAccount: undefined,
+    saveChildChartAccount : undefined,
+    getChildChartOfAccounts: undefined,
     listPurposeTemplates : undefined,
     listPaymentVoucher: undefined,
     listAccounts: undefined,
@@ -104,6 +112,13 @@ export class TransactionsState {
   }
 
   @Selector()
+  public static getChildChartofAccounts(
+    state: TransactionsStateModel
+  ): any {
+    return state.getChildChartOfAccounts;
+  }
+
+  @Selector()
   public static listFinancialTransaction(
     state: TransactionsStateModel
   ): any {
@@ -121,6 +136,21 @@ export class TransactionsState {
   ): any {
     return state.listBankReconciliation;
   }
+
+  @Selector()
+  public static listSettelementHeaders(
+    state: TransactionsStateModel
+  ): any {
+    return state.listSettelementHeaders;
+  }
+
+  @Selector()
+  public static listPaymentHeaders(
+    state: TransactionsStateModel
+  ): any {
+    return state.listPaymentHeaders;
+  }
+
   @Selector()
   public static listPaymentVoucher(
     state: TransactionsStateModel
@@ -212,6 +242,11 @@ export class TransactionsState {
   @Selector()
   public static deleteVoucherDetail(state: TransactionsStateModel): any {
     return state.deleteVoucherDetail;
+  }
+
+  @Selector()
+  public static saveChildChartAccount(state: TransactionsStateModel): any {
+    return state.saveChildChartAccount;
   }
 
 
@@ -321,8 +356,8 @@ export class TransactionsState {
         });
 
     return this.TransactionsApiService.getVoucherNumber(payload.payload, payload.payload2 ).pipe(
-      tap((item: any) => {
-        patchState({ getVoucherNumber: item, loading: false });
+      tap((item: string) => {
+        patchState({ getVoucherNumber: item , loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );
@@ -441,6 +476,22 @@ export class TransactionsState {
     );
   }
 
+  @Action(GetChildChartOfAccounts) getChildChartOfAccounts(
+    { patchState }: StateContext<TransactionsStateModel>,
+    payload: GetChildChartOfAccounts
+  ): any {
+    patchState({
+      loading: true,
+    });
+
+    return this.TransactionsApiService.getChildChartsOfAccounts(payload.payload).pipe(
+      tap((item: any) => {
+        patchState({ getChildChartOfAccounts: item, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
   @Action(ListVoucher) listVoucher(
     { patchState }: StateContext<TransactionsStateModel>,
     payload: ListVoucher
@@ -489,17 +540,68 @@ export class TransactionsState {
     );
   }
 
-  @Action(listBankReconciliation) listBankReconciliation(
+  @Action(ListBankReconciliation) listBankReconciliation(
     { patchState }: StateContext<TransactionsStateModel>,
-    payload: listBankReconciliation
-  ): any {
-    patchState({
-      loading: true,
+        payload: ListBankReconciliation
+    ): any {
+      patchState({
+        loading: true,
     });
 
     return this.TransactionsApiService.getBankReconciliation().pipe(
       tap((item: any) => {
         patchState({ listBankReconciliation: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+   @Action(ListSettelementHeaders) listSettelementHeaders(
+    { patchState }: StateContext<TransactionsStateModel>,
+        payload: ListSettelementHeaders
+    ): any {
+      patchState({
+        loading: true,
+    });
+
+    return this.TransactionsApiService.getSettelementHeaders().pipe(
+      tap((item: any) => {
+        patchState({ listSettelementHeaders: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+
+
+
+  @Action(ListPaymentHeaders) listPaymentHeaders(
+    { patchState }: StateContext<TransactionsStateModel>,
+        payload: ListPaymentHeaders
+    ): any {
+      patchState({
+        loading: true,
+    });
+
+    return this.TransactionsApiService.getPaymentHeaders().pipe(
+      tap((item: any) => {
+        patchState({ listPaymentHeaders: item.Data, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
+  @Action(ListSlaAccount) listSlaAccount(
+    { patchState }: StateContext<TransactionsStateModel>,
+        payload: ListSlaAccount
+    ): any {
+      patchState({
+        loading: true,
+    });
+
+    return this.TransactionsApiService.getSlaAccount().pipe(
+      tap((item: any) => {
+        patchState({ listSlaAccount: item.Data, loading: false });
       }),
       catchError((error) => of(patchState({ loading: false })))
     );
@@ -600,6 +702,23 @@ export class TransactionsState {
       catchError((error) => of(patchState({ loading: false })))
     );
   }
+
+  @Action(SaveChildChartAccount) saveChildChartAccount(
+    { patchState }: StateContext<TransactionsStateModel>,
+    payload: SaveChildChartAccount
+    ): any {
+      patchState({
+        loading: true,
+    });
+
+    return this.TransactionsApiService.saveChildChartAccount(payload.payload).pipe(
+      tap((result: any) => {
+        patchState({ saveChildChartAccount: result, loading: false });
+      }),
+      catchError((error) => of(patchState({ loading: false })))
+    );
+  }
+
 
     @Action(PostTransaction) postTransaction(
     { patchState }: StateContext<TransactionsStateModel>,

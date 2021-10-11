@@ -1,0 +1,54 @@
+<ExtPanel extname="home" padding="10 10 10 2" layout="fit" fitToParent="true">
+  <ExtContainer layout="fit" flex="2" fitToParent="true">
+    <ExtGrid [store]="data_paymentHeaders" [height]="'100%'">
+      <ExtToolbar [docked]="'top'" [layout]="{ type: 'hbox', pack: 'left' }">
+        <ExtButton
+          text="Save"
+          ui="action raised round"
+          [margin]="'0 10 0 0'"
+          iconCls="x-fa fa-plus"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onSave($event)"
+        >
+        </ExtButton>
+        <ExtButton
+          text="Preview"
+          ui="action raised round "
+          [margin]="'0 10 0 0'"
+          iconCls="x-fa fa-eye"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onPreview($event)"
+        >
+        </ExtButton>
+      </ExtToolbar>
+
+      <ExtColumn
+        text="Cost Center"
+        dataIndex="CostCenterId"
+        width="200"
+      ></ExtColumn>
+      <ExtColumn text="Date" dataIndex="Date" width="200"></ExtColumn>
+      <ExtColumn
+        text="Voucher Type"
+        dataIndex="VoucherTypeId"
+        width="200"
+      ></ExtColumn>
+      <ExtColumn
+        text="Sequence No"
+        dataIndex="Sequence No"
+        width="200"
+      ></ExtColumn>
+      <ExtColumn text="ChequeNo" dataIndex="ChequeNo" width="200"></ExtColumn>
+      <ExtColumn text="Payed To" dataIndex="PayedTo" width="200"></ExtColumn>
+      <ExtColumn text="Purpose" dataIndex="PurposeId" width="200"></ExtColumn>
+      <ExtColumn
+        text="Description"
+        dataIndex="Description"
+        width="200"
+      ></ExtColumn>
+      <ExtColumn text="Amount" dataIndex="Amount" width="200"></ExtColumn>
+    </ExtGrid>
+  </ExtContainer>
+</ExtPanel>

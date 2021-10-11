@@ -1,6 +1,5 @@
-import { PaymentVoucher, VoucherHeader, VoucherHeaderPost } from 'src/app/models/defaultSettings';
+import { ChartOfAccountModel, PaymentVoucher, VoucherHeader, VoucherHeaderPost } from 'src/app/models/defaultSettings';
 import { Voucher } from 'src/app/models/voucher';
-
 
 export class ListVoucher {
   static readonly type = '[TransactionsState] ListVoucher';
@@ -66,6 +65,11 @@ export class ListChartsOfAccount {
   constructor(public readonly payload?: any) {}
 }
 
+export class GetChildChartOfAccounts {
+  static readonly type = '[TransactionsState] GetChildChartOfAccounts';
+  constructor(public readonly payload?: ChartOfAccountModel) {}
+}
+
 export class listFinancialTransaction {
   static readonly type = '[TransactionsState] listFinancialTransaction';
   constructor(public readonly payload?: any) {}
@@ -75,8 +79,23 @@ export class listCollectionVoucher {
   constructor(public readonly payload?: any) {}
 }
 
-export class listBankReconciliation {
-  static readonly type = '[TransactionsState] listBankReconciliation';
+export class ListBankReconciliation {
+  static readonly type = '[TransactionsState] ListBankReconciliation';
+  constructor(public readonly payload?: any) {}
+}
+
+export class ListSettelementHeaders {
+  static readonly type = '[TransactionsState] ListSettelementHeaders';
+  constructor(public readonly payload?: any) {}
+}
+
+export class ListSlaAccount {
+  static readonly type = '[TransactionsState] ListSlaAccount';
+  constructor(public readonly payload?: any) {}
+}
+
+export class ListPaymentHeaders {
+  static readonly type = '[TransactionsState] ListPaymentHeaders';
   constructor(public readonly payload?: any) {}
 }
 
@@ -116,7 +135,7 @@ export class DeletePaymentVoucher {
 }
 
 export class DeleteVoucherDetail{
-  static readonly type = '[TransactionState] DeleteVoucherDetail';
+  static readonly type = '[TransactionsState] DeleteVoucherDetail';
   constructor(public readonly payload ? : any){}
 }
 
@@ -126,38 +145,36 @@ export class DeleteCollectionVoucher {
 }
 
 export class PostTransaction {
-  static readonly type = '[TransactionState] PostTransaction';
+  static readonly type = '[TransactionsState] PostTransaction';
   constructor(public readonly payload? : VoucherHeader[]){}
-
 }
 
 export class UnPostTransaction {
-  static readonly type = '[TransactionState] UnPostTransaction';
+  static readonly type = '[TransactionsState] UnPostTransaction';
   constructor(public readonly payload? : VoucherHeader[]){}
 
 }
 
 export class VoidTransaction {
-  static readonly type = '[TransactionState] VoidTransaction';
+  static readonly type = '[TransactionsState] VoidTransaction';
   constructor(public readonly payload? : VoucherHeader[]){}
 
 }
 
 export class DeleteTransaction {
-  static readonly type = '[TransactionState] DeleteTransaction';
+  static readonly type = '[TransactionsState] DeleteTransaction';
   constructor(public readonly payload? : VoucherHeader[]){}
 
 }
 
-
 export class AdjustTransaction {
-  static readonly type = '[TransactionState] AdjustTransaction';
+  static readonly type = '[TransactionsState] AdjustTransaction';
   constructor(public readonly payload? : VoucherHeader){}
 
 }
 
 export class GetJVNumber {
-  static readonly type = '[TransactionState] GetJVNumber';
+  static readonly type = '[TransactionsState] GetJVNumber';
   constructor(public readonly payload? : any){}
 
 }
@@ -165,6 +182,11 @@ export class GetJVNumber {
 export class SaveVoucher {
   static readonly type = '[TransactionsState] SaveVoucher';
    constructor(public readonly payload? : VoucherHeaderPost ){}
+}
+
+export class SaveChildChartAccount {
+  static readonly type = '[TransactionsState] SaveChildChartAccount';
+   constructor(public readonly payload? : ChartOfAccountModel ){}
 }
 
 

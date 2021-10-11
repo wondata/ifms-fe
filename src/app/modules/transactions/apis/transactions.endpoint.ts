@@ -28,7 +28,13 @@ export const TransactionsEndpoints = {
   getTransactionDetail : `${environment.urls.api}/api/Transaction/GetTransactionDetails`,
 
   listChartsOfAccount: `${environment.urls.api}/api/ChartOfAccount/GetChartOfAccount`,
+  getChildChartsOfAccount : `${environment.urls.api}/api/ChartOfAccount/GetChildChartsOfAccount`,
   listBankReconciliation: `${environment.urls.api}/api/ChartOfAccount/GetBankReconciliation`,
+  saveChildChartAccount: `${environment.urls.api}/api/ChartOfAccount/SaveChildChartAccount`,
+
+  getSlaAccount: `${environment.urls.api}/api/BankReconciliation/GetSLAACcount`,
+  getPaymentHeaders: `${environment.urls.api}/api/Transaction/GetPaymentHeaders`,
+  getSettelementHeaders : `${environment.urls.api}/api/Transaction/GetSettelementHeaders`,
 
   postTranasaction: `${environment.urls.api}/api/Transaction/TransactionPost`,
   unpostTranasaction: `${environment.urls.api}/api/Transaction/TransactionUnpost`,

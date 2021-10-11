@@ -37,7 +37,7 @@ export class FinancialTransactionComponent implements OnInit {
 
   selectedTransaction: VoucherHeader [] = [];
 
-  selectable:any = {
+    selectable:any = {
       columns: true,
       cells: false,
       checkbox: true,

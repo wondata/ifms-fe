@@ -16,7 +16,6 @@ import { TransactionsState } from '../../store/states/transactions.state';
 })
 export class CollectionVoucherComponent implements OnInit {
     @Select(TransactionsState.listCollectionVoucher) listCollectionVoucher$: Observable<any>;
-
     @Select(TransactionsState.listAccounts) listAccounts$: Observable<any>;
     @Select(TransactionsState.getLookups) getLookups$: Observable<any>;
     @Select(TransactionsState.listCostCenter) listCostCenter$: Observable<any>;
@@ -29,10 +28,10 @@ export class CollectionVoucherComponent implements OnInit {
     editablePlugin : any;
 
     stored = Ext.create('Ext.data.Store', {
-        fields: [
-        'Name',
-              { name: 'Date', type: 'date', dateFormat: 'c' },
-                ]
+      fields: [
+      'Name',
+            { name: 'Date', type: 'date', dateFormat: 'c' },
+          ]
     });
 
     disabled:boolean = false;
@@ -93,13 +92,13 @@ export class CollectionVoucherComponent implements OnInit {
       });
 
       this.listCollectionVoucherType$.subscribe((data) => {
-            this.voucherOptions = data;
-            this.voucherEditor = { xtype: 'selectfield', options: data };
+          this.voucherOptions = data;
+          this.voucherEditor = { xtype: 'selectfield', options: data };
         });
 
       this.listAccounts$.subscribe((data) => {
-            this.accountOptions = data;
-            this.accountEditor = { xtype: 'selectfield', options: data };
+          this.accountOptions = data;
+          this.accountEditor = { xtype: 'selectfield', options: data };
         });
 
       this.getLookups$.subscribe((data) => {
@@ -142,9 +141,9 @@ export class CollectionVoucherComponent implements OnInit {
     saveCollectionVoucher(params: any) {
       debugger
       this.store.dispatch(new CreateCollectionVoucher(params))
-            .subscribe(() => {
-              this.store.dispatch(new listCollectionVoucher());
-            });
+        .subscribe(() => {
+          this.store.dispatch(new listCollectionVoucher());
+        });
     }
 
     onChilddoubletap = ({ sender, location  }) => {
