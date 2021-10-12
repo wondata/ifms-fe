@@ -1,99 +1,96 @@
-<div>
-  <div class="max-w-xl container">
-    <form [formGroup]="voucherTypeForm">
-      <ExtContainer layout="fit"
-        fitToParent="true">
-        <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
-          <ExtFieldset [title]="''"
-            [defaults]="{ labelAlign: 'placeholder' }">
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Cost Center"
-                value=""
-                formControlName="costCenter" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Voucher Type"
-                value=""
-                formControlName="voucherType" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Default Account"
-                value=""
-                formControlName="defaultAccount" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Balance Side"
-                value=""
-                formControlName="balanceSide" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Starting Number"
-                value=""
-                formControlName="startingNumber" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Ending Number"
-                value=""
-                formControlName="endingNumber" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Current Number"
-                value=""
-                formControlName="currentNumber" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Number Of Digits"
-                value=""
-                formControlName="numberOfDigits" />
-            </mat-form-field>
-          </ExtFieldset>
-          <ExtButton [margin]="'0 0 0 0'"
-            [text]="'Save'"
-            (tap)="onSubmitVoucherTypeForm()">
-          </ExtButton>
-        </ExtFormpanel>
-      </ExtContainer>
-    </form>
-  </div>
-  <div>
-    <ExtPanel extname="home"
-      padding="10 10 10 2"
-      layout="fit"
-      fitToParent="true">
-      <ExtGrid [store]="stored">
-        <ExtColumn text="CostCenter"
-          dataIndex="CostCenter"
-          width="200"></ExtColumn>
-        <ExtColumn text="VoucherType"
-          dataIndex="VoucherType"
-          width="200"></ExtColumn>
-        <ExtColumn text="DefaultAccount"
-          dataIndex="DefaultAccount"
-          width="200"></ExtColumn>
-        <ExtColumn text="AccountTitle"
-          dataIndex="AccountTitle"
-          width="200"></ExtColumn>
-        <ExtColumn text="BalanceSide"
-          dataIndex="BalanceSide"
-          width="200"></ExtColumn>
-        <ExtColumn text="StartingNumber"
-          dataIndex="StartingNumber"
-          width="200"></ExtColumn>
-        <ExtColumn text="CurrentNumber"
-          dataIndex="CurrentNumber"
-          width="200"></ExtColumn>
-        <ExtColumn text="NumberOfDigits"
-          dataIndex="NumberOfDigits"
-          width="200"></ExtColumn>
-      </ExtGrid>
-    </ExtPanel>
-  </div>
-</div>
+<ExtContainer layout="fit" fitToParent="true">
+  <ExtGrid
+    [store]="gridStore"
+    layout="fit"
+    (ready)="onGridReady($event)"
+    (childdoubletap)="onChilddoubletap($event)"
+    [plugins]="{
+      grideditable: { enableDeleteButton: true, triggerEvent: '' },
+      gridfilters: true
+    }"
+  >
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
+
+    <ExtTextcolumn
+      text="Id"
+      flex="1"
+      hidden="true"
+      dataIndex="Id"
+      editable="true"
+      [editor]="{ xtype: 'hiddenfield' }"
+    ></ExtTextcolumn>
+    <ExtGridcolumn
+      text="Cost Center"
+      dataIndex="CostCenterId"
+      editable="true"
+      [width]="250"
+      [editor]="costCenterEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Voucher Type"
+      dataIndex="VoucherTypeId"
+      editable="true"
+      [editor]="voucherEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Default Account"
+      dataIndex="DefaultAccountId"
+      [editor]="defaultAccountEditor"
+      [renderer]="this.renderColumn"
+      editable="true"
+      width="200"
+    ></ExtGridcolumn>
+    <ExtColumn
+      text="Account Title"
+      tpl="{SubsidiaryAccount.Name}"
+      width="200"
+    ></ExtColumn>
+    <ExtColumn
+      text="Balance Side"
+      dataIndex="BalanceSideId"
+      width="200"
+      editable="true"
+      [editor]="balanceEditor"
+      [renderer]="this.renderColumn"
+    ></ExtColumn>
+    <ExtNumbercolumn
+      text="StartingNumber"
+      dataIndex="StartingNumber"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtNumbercolumn
+      text="CurrentNumber"
+      dataIndex="CurrentNumber"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtNumbercolumn
+      text="NumberOfDigits"
+      dataIndex="NumberOfDigits"
+      editable="true"
+    ></ExtNumbercolumn>
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+        tools: {
+          centered: true,
+          trash: {
+            handler: this.onDelete
+          }
+        }
+      }"
+    ></ExtGridcolumn>
+  </ExtGrid>
+</ExtContainer>

@@ -1,115 +1,136 @@
-<div>
-  <div class="max-w-xl container">
-    <form [formGroup]="paymentVoucherForm">
-      <ExtContainer layout="fit"
-        fitToParent="true">
-        <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
-          <ExtFieldset [title]="''"
-            [defaults]="{ labelAlign: 'placeholder' }">
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Voucher Type"
-                value=""
-                formControlName="VoucherType" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Date"
-                value=""
-                formControlName="Date" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="AuthorizedDate"
-                value=""
-                formControlName="AuthorizedDate" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Amount"
-                value=""
-                formControlName="Amount" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="PaidTo"
-                value=""
-                formControlName="PaidTo" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Purpose"
-                value=""
-                formControlName="Purpose" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Description"
-                value=""
-                formControlName="Description" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Account"
-                value=""
-                formControlName="Account" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="ModeOfPayment"
-                value=""
-                formControlName="ModeOfPayment" />
-            </mat-form-field>
-            <mat-form-field class="w-2/3 flex justify-center">
-              <input matInput
-                placeholder="Project"
-                value=""
-                formControlName="Project" />
-            </mat-form-field>
-          </ExtFieldset>
-          <ExtButton [margin]="'0 0 0 0'"
-            [text]="'Save'"
-            (tap)="onSubmitPaymentVoucherForm()">
-          </ExtButton>
-        </ExtFormpanel>
-      </ExtContainer>
-    </form>
-  </div>
-  <ExtPanel extname="home"
-    padding="10 10 10 2"
+<ExtContainer padding="10" layout="fit" fitToParent="true">
+  <ExtGrid
+    [store]="stored"
     layout="fit"
-    fitToParent="true">
-    <ExtGrid [store]="stored">
-      <ExtColumn text="Date"
-        dataIndex="Date"
-        width="200"></ExtColumn>
-      <ExtColumn text="Sequence No"
-        dataIndex="SequenceNo"
-        width="200"></ExtColumn>
-      <ExtColumn text="Checked?"
-        dataIndex="Checked"
-        width="200"></ExtColumn>
-      <ExtColumn text="ChequeNo"
-        dataIndex="ChequeNo"
-        width="200"></ExtColumn>
-      <ExtColumn text="Payed To Received From"
-        dataIndex="PayedToReceivedFrom"
-        width="200"></ExtColumn>
-      <ExtColumn text="Purpose"
-        dataIndex="Purpose"
-        width="200"></ExtColumn>
-      <ExtColumn text="Description"
-        dataIndex="Description"
-        width="200"></ExtColumn>
-      <ExtColumn text="CostCenter"
-        dataIndex="CostCenter"
-        width="200"></ExtColumn>
-      <ExtColumn text="VoucherType"
-        dataIndex="VoucherType"
-        width="200"></ExtColumn>
-      <ExtColumn text="Amount"
-        dataIndex="Amount"
-        width="200"></ExtColumn>
-    </ExtGrid>
-  </ExtPanel>
-</div>
+    (ready)="onGridReady($event)"
+    [plugins]="{ grideditable: true, gridfilters: true }"
+  >
+    <ExtToolbar docked="top">
+      <ExtButton
+        text="Add"
+        ui="action raised round"
+        iconCls="x-fa fa-plus"
+        iconAlign="left"
+        alignSelf="right"
+        (tap)="onAdd()"
+      >
+      </ExtButton>
+    </ExtToolbar>
+    <ExtGridcolumn
+      text="Id"
+      dataIndex="Id"
+      hidden="true"
+      [editor]="{ xtype: 'hiddenfield' }"
+    ></ExtGridcolumn>
+    <ExtDatecolumn
+      text="Date"
+      width="120"
+      dataIndex="Date"
+      format="M d, Y"
+      editable="true"
+    ></ExtDatecolumn>
+    <ExtDatecolumn
+      text="Authorized Date"
+      width="120"
+      dataIndex="AuthorizedDate"
+      format="M d, Y"
+      [displayed]="false"
+      hidden="true"
+    ></ExtDatecolumn>
+    <ExtGridcolumn
+      width="120"
+      text="SequenceNo"
+      dataIndex="DocumentNo"
+    ></ExtGridcolumn>
+    <!-- <ExtGridcolumn
+      text="Checked"
+      dataIndex="IsChecked"
+      value="true"
+      [renderer]="this.renderBoolean"
+    ></ExtGridcolumn> -->
+    <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo"> </ExtGridcolumn>
+    <ExtGridcolumn
+      text="Paid To/Received From"
+      editable="true"
+      [flex]="1"
+      dataIndex="PayedToReceivedFrom"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Purpose"
+      dataIndex="PurposeTemplateId"
+      editable="true"
+      [renderer]="this.renderColumn"
+      [editor]="purposeEditor"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Description"
+      dataIndex="Description"
+      editable="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Cost Center"
+      dataIndex="CostCenterId"
+      [editable]="true"
+      [editor]="costCenterEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Voucher Type"
+      dataIndex="VoucherTypeId"
+      editable="true"
+      [editor]="voucherEditor"
+      [renderer]="this.renderColumn"
+    ></ExtGridcolumn>
+    <ExtNumbercolumn
+      text="Amount"
+      dataIndex="Amount"
+      editable="true"
+      [renderer]="this.renderSign"
+    ></ExtNumbercolumn>
+    <ExtGridcolumn
+      text="Paid To"
+      dataIndex="PayedToReceivedFrom"
+      [displayed]="false"
+      hidden="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Account"
+      dataIndex="AccountId"
+      [editor]="accountEditor"
+      [displayed]="false"
+      hidden="true"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Mode Of Payment"
+      editable="true"
+      dataIndex="ModeOfPaymentId"
+      [editor]="modePaymentEditor"
+    >
+    </ExtGridcolumn>
+
+    <ExtGridcolumn
+      text="Payment Doc. No"
+      dataIndex="ChequeNo"
+      [displayed]="false"
+    ></ExtGridcolumn>
+    <ExtGridcolumn
+      text="Project"
+      dataIndex="Project"
+      [displayed]="false"
+      hidden="true"
+    ></ExtGridcolumn>
+
+    <ExtGridcolumn
+      text="Operations"
+      flex="1"
+      [cell]="{
+        tools: {
+          centered: false,
+          trash: {
+            handler: this.deletePaymentVoucher
+          }
+        }
+      }"
+    ></ExtGridcolumn>
+  </ExtGrid>
+</ExtContainer>

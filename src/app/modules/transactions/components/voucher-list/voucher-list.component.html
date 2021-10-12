@@ -1,37 +1,19 @@
 <ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
-  <ExtGrid [store]="stored">
-    <ExtColumn text="Date"
-      dataIndex="Date"
-      width="200"></ExtColumn>
-    <ExtColumn text="SequenceNo"
-      dataIndex="SequenceNo"
-      width="200"></ExtColumn>
-    <ExtColumn text="ChequeNo"
-      dataIndex="ChequeNo"
-      width="200"></ExtColumn>
-    <ExtColumn text="Payed To/Received"
-      dataIndex="PayedToReceived"
-      width="200"></ExtColumn>
-    <ExtColumn text="Purpose"
-      dataIndex="Purpose"
-      width="200"></ExtColumn>
-    <ExtColumn text="Description"
-      dataIndex="Description"
-      width="200"></ExtColumn>
-    <ExtColumn text="OwnerCostCenter"
-      dataIndex="OwnerCostCenter"
-      width="200"></ExtColumn>
-    <ExtColumn text="VoucherType"
-      dataIndex="VoucherType"
-      width="200"></ExtColumn>
-    <ExtColumn text="Amount"
-      dataIndex="Amount"
-      width="200"></ExtColumn>
-    <ExtColumn text="PostedFromOperation"
-      dataIndex="PostedFromOperation"
-      width="200"></ExtColumn>
+    padding="10 10 10 2"
+    layout="box"
+    fitToParent="true">
+  <ExtGrid [store]="stored" (ready)="gridReady($event)">
+    <ExtGridcolumn text="Id" dataIndex="Id" hidden="true" flex="1"></ExtGridcolumn>
+    <ExtGridcolumn text="IsBalanced" dataIndex="IsBalanced" [renderer]="this.renderSign" ></ExtGridcolumn>
+    <ExtGridcolumn text="Date" dataIndex="Date" formatter='date("M,d/Y")' ></ExtGridcolumn>
+    <ExtGridcolumn text="SequenceNo" dataIndex="ReferenceNo" ></ExtGridcolumn>
+    <ExtGridcolumn text="ChequeNo"   dataIndex="ChequeNo"   ></ExtGridcolumn>
+    <ExtGridcolumn text="Payed To/Received" dataIndex="PayedToReceivedFrom" ></ExtGridcolumn>
+    <ExtGridcolumn text="Purpose" dataIndex="Purpose"  ></ExtGridcolumn>
+    <ExtGridcolumn text="Description" dataIndex="Description"  ></ExtGridcolumn>
+    <ExtGridcolumn text="OwnerCostCenter" tpl='{CostCenter.Name}' ></ExtGridcolumn>
+    <ExtGridcolumn text="VoucherType" tpl='{VoucherType.Name}'  ></ExtGridcolumn>
+    <ExtGridcolumn text="Amount"  dataIndex="Amount" ></ExtGridcolumn>
+    <ExtGridcolumn text="PostedFromOperation" dataIndex="PostedFromOperation" ></ExtGridcolumn>
   </ExtGrid>
 </ExtPanel>

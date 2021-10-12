@@ -1,40 +1,337 @@
-<ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
-  <ExtGrid [store]="stored">
-    <ExtColumn text="CostCenter"
-      dataIndex="CostCenter"
-      width="200"></ExtColumn>
-    <ExtColumn text="VoucherType"
-      dataIndex="VoucherType"
-      width="200"></ExtColumn>
-    <ExtColumn text="SequenceNo"
-      dataIndex="SequenceNo"
-      width="200"></ExtColumn>
-    <ExtColumn text="Date"
-      dataIndex="Date"
-      width="200"></ExtColumn>
-    <ExtColumn text="Posted"
-      dataIndex="Posted"
-      width="200"></ExtColumn>
-    <ExtColumn text="Void"
-      dataIndex="Void"
-      width="200"></ExtColumn>
-    <ExtColumn text="Adjustment"
-      dataIndex="Adjustment"
-      width="200"></ExtColumn>
-    <ExtColumn text="Payed To/Received"
-      dataIndex="PayedToReceived"
-      width="200"></ExtColumn>
-    <ExtColumn text="Amount"
-      dataIndex="Amount"
-      width="200"></ExtColumn>
-    <ExtColumn text="Purpose"
-      dataIndex="Purpose"
-      width="200"></ExtColumn>
-    <ExtColumn text="Description"
-      dataIndex="Description"
-      width="200"></ExtColumn>
-  </ExtGrid>
-</ExtPanel>
+<ExtContainer padding="10" layout="fit" fitToParent="true">
+  <ExtPanel
+    [docked]="'left'"
+    [shadow]="true"
+    width="70%"
+    [resizable]="{ split: true, edges: 'east', dynamic: true }"
+  >
+    <ExtGrid
+      [store]="stored"
+      height="100%"
+      (ready)="onGridReady($event)"
+      [rowNumbers]="true"
+      [selectable]="this.selectable"
+      (childdoubletap)="onChilddoubletap($event)"
+      (select)="onSelect($event)"
+      (deselect)="onDeselect($event)"
+      [plugins]="{
+        grideditable: { enableDeleteButton: true, triggerEvent: '' },
+        gridfilters: true
+      }"
+    >
+      <ExtToolbar docked="top">
+        <ExtButton
+          text="Post"
+          ui="action raised round"
+          iconCls="x-fa fa-check"
+          iconAlign="left"
+          alignSelf="right"
+          [margin]="'0 10 0 0'"
+          (tap)="onPost()"
+        >
+        </ExtButton>
+        <ExtButton
+          text="UnPost"
+          ui="decline raised round "
+          [margin]="'10 0 10 0'"
+          iconCls="x-fa fa-exclamation"
+          iconAlign="left"
+          alignSelf="right"
+          [margin]="'0 10 0 0'"
+          (tap)="onUnpost()"
+        >
+        </ExtButton>
+        <ExtButton
+          text="Void"
+          ui="decline raised round"
+          [margin]="'10 0 10 0'"
+          iconCls="x-fa fa-minus"
+          iconAlign="left"
+          alignSelf="right"
+          [margin]="'0 10 0 0'"
+          (tap)="onVoid()"
+        >
+        </ExtButton>
+        <ExtButton
+          text="Adjust"
+          ui="confirm raised round"
+          iconCls="x-fa fa-edit"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onAdjust()"
+        >
+        </ExtButton>
+
+        <ExtButton
+          text="Delete"
+          ui="decline raised round"
+          iconCls="x-fa fa-stop-circle"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onDelete()"
+        >
+        </ExtButton>
+      </ExtToolbar>
+      <ExtGridcolumn
+        text="Id"
+        dataIndex="Id"
+        hidden="true"
+        flex="1"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="IsBalanced"
+        dataIndex="IsBalanced"
+        [renderer]="this.renderBoolean"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="CostCenter"
+        tpl="{CostCenter.Name}"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="VoucherType"
+        tpl="{VoucherType.Name}"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="SequenceNo"
+        dataIndex="ReferenceeNo"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtDatecolumn
+        text="Date"
+        dataIndex="Date"
+        format="M d, Y"
+        width="120"
+      ></ExtDatecolumn>
+      <ExtGridcolumn
+        text="Posted"
+        dataIndex="IsPosted"
+        [renderer]="this.renderBoolean"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Void"
+        dataIndex="IsVoid"
+        [renderer]="this.renderBoolean"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Adjustment"
+        dataIndex="IsAdjustment"
+        [renderer]="this.renderBoolean"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Payed To/Received"
+        dataIndex="PayedToReceivedFrom"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Amount"
+        dataIndex="Amount"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Purpose"
+        dataIndex="Purpose"
+        tpl="{PurposeTemplate.text}"
+        width="120"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Description"
+        dataIndex="Description"
+        width="120"
+      ></ExtGridcolumn>
+    </ExtGrid>
+  </ExtPanel>
+
+  <ExtPanel [resizable]="{ split: true, edges: 'east', dynamic: true }">
+    <ExtGrid
+      [store]="financial_store"
+      height="100%"
+      (ready)="gridReady2($event)"
+      [rowNumbers]="true"
+      [plugins]="{
+        grideditable: { enableDeleteButton: true, triggerEvent: '' },
+        summaryrow: true,
+        gridfilters: true
+      }"
+    >
+      <ExtGridcolumn
+        text="Id"
+        dataIndex="Id"
+        hidden="false"
+        flex="1"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Cost Center"
+        tpl="{CostCenters.Name}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Account Code"
+        tpl="{ControlAccount.Code} - {SubsidiaryAccount.Code}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Account Title"
+        width="200"
+        tpl="{SubsidiaryAccount.Name}"
+      ></ExtGridcolumn>
+      <ExtTextcolumn
+        text="Debit Amount"
+        summary="sum"
+        dataIndex="DebitAmount"
+      ></ExtTextcolumn>
+      <ExtTextcolumn
+        text="Credit Amount"
+        summary="sum"
+        dataIndex="CreditAmount"
+      ></ExtTextcolumn>
+      <ExtGridcolumn
+        text="Is IBT Cleared ?"
+        dataIndex="IsInterBranchTransactionCleared"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <!-- <ExtGridcolumn text="IBT Reference No" dataIndex=""  ></ExtGridcolumn> [summaryRenderer]="this.salarySummaryRenderer" -->
+    </ExtGrid>
+  </ExtPanel>
+
+  <ExtDialog
+    [height]="500"
+    [maxWidth]="950"
+    [closable]="false"
+    [maximizable]="true"
+    [closeAction]="'hide'"
+    [displayed]="isDialogShowing"
+    [padding]="0"
+  >
+    <ExtFormpanel
+      (ready)="onFormReady($event)"
+      padding="0 20 20 20"
+      layout="fit"
+      fitToParent="true"
+      title="Adjust Financial Transaction"
+      [platformConfig]="{ '!phone': { maxHeight: 500, width: 950 } }"
+    >
+      <ExtFieldset [defaults]="{ labelAlign: 'placeholder' }">
+        <ExtHiddenfield name="Id"></ExtHiddenfield>
+        <ExtDatefield
+          name="Date"
+          label="Date"
+          destroyPickerOnHide="true"
+          [width]="200"
+        ></ExtDatefield>
+        <ExtTextfield
+          name="Reference No:"
+          label="Reference No"
+          name="ReferenceNo"
+          [width]="200"
+        ></ExtTextfield>
+        <ExtTextfield
+          name="Description"
+          [placeholder]="'Enter Description...'"
+          [label]="'Description'"
+          [width]="200"
+          label=""
+        ></ExtTextfield>
+
+        <ExtGrid
+          [store]="financial_store"
+          width="100%"
+          [height]="'fit'"
+          (ready)="gridReady3($event)"
+          [rowNumbers]="true"
+          [plugins]="{
+            grideditable: { enableDeleteButton: true, triggerEvent: '' },
+            summaryrow: true,
+            gridfilters: true
+          }"
+        >
+          <ExtGridcolumn
+            text="Id"
+            dataIndex="Id"
+            hidden="false"
+            flex="1"
+            [editor]="{ xtype: 'hiddenfield' }"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Cost Center"
+            tpl="{CostCenters.Name}"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Account Code"
+            tpl="{ControlAccount.Code} - {SubsidiaryAccount.Code}"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Account Name"
+            tpl="{SubsidiaryAccount.Name}"
+          ></ExtGridcolumn>
+          <ExtTextcolumn
+            text="Debit Amount"
+            summary="sum"
+            dataIndex="DebitAmount"
+          ></ExtTextcolumn>
+          <ExtTextcolumn
+            text="Credit Amount"
+            summary="sum"
+            dataIndex="CreditAmount"
+          ></ExtTextcolumn>
+          <ExtGridcolumn text="Cost Code" tpl="{CostCode.Name}"></ExtGridcolumn>
+        </ExtGrid>
+      </ExtFieldset>
+      <ExtToolbar
+        [docked]="'bottom'"
+        [layout]="{ type: 'hbox', pack: 'right' }"
+      >
+        <ExtButton
+          text="Fetch Previous"
+          [margin]="'0 10 0 0'"
+          (tap)="fetchPrevious($event)"
+          ui="Confirm raised round"
+          iconCls="x-fa fa-arrow-left"
+          iconAlign="left"
+          alignSelf="right"
+        ></ExtButton>
+        <ExtButton
+          text="New"
+          [margin]="'0 10 0 0'"
+          (tap)="addNew($event)"
+          ui="action raised round"
+          iconCls="x-fa fa-plus"
+          iconAlign="left"
+          alignSelf="right"
+        ></ExtButton>
+        <ExtButton
+          text="Save"
+          [margin]="'0 10 0 0'"
+          (tap)="saveForm($event)"
+          ui="Confirm raised round"
+          iconCls="x-fa fa-save"
+          iconAlign="left"
+          alignSelf="right"
+        ></ExtButton>
+        <ExtButton
+          text="Delete"
+          [margin]="'0 10 0 0'"
+          (tap)="delete($event)"
+          ui="action raised round"
+          iconCls="x-fa fa-trash-alt"
+          iconAlign="left"
+          alignSelf="right"
+        ></ExtButton>
+        <ExtButton
+          text="Cancel"
+          [margin]="'0 10 0 0'"
+          (tap)="cancelForm($event)"
+          ui="action raised round"
+          iconCls="x-fa fa-stop-circle"
+          iconAlign="left"
+          alignSelf="right"
+        ></ExtButton>
+      </ExtToolbar>
+    </ExtFormpanel>
+  </ExtDialog>
+</ExtContainer>

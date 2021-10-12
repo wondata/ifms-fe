@@ -1,9 +1,8 @@
-<div>
+<!-- <div> -->
   <form [formGroup]="voucherForm">
-    <ExtContainer [width]="width"
-      layout="fit"
+     <ExtContainer
       fitToParent="true">
-      <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
+      <ExtFormpanel  [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
         <ExtFieldset [title]="''"
           [defaults]="{ labelAlign: 'placeholder' }">
           <mat-form-field class="w-2/3 flex justify-center">
@@ -63,4 +62,4 @@
       </ExtFormpanel>
     </ExtContainer>
   </form>
-</div>
+<!-- </div> -->

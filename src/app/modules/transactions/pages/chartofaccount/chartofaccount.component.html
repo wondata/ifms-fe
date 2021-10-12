@@ -1,13 +1,87 @@
-<ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
-  <ExtGrid [store]="stored">
-    <ExtColumn text="Name"
-      dataIndex="Name"
-      width="200"></ExtColumn>
-    <ExtColumn text="Code"
-      dataIndex="Code"
-      width="200"></ExtColumn>
-  </ExtGrid>
-</ExtPanel>
+<ExtContainer layout="fit" fitToParent="true">
+  <ExtPanel
+    [docked]="'left'"
+    [width]="400"
+    [shadow]="true"
+    [resizable]="{ split: true, edges: 'east', dynamic: true }"
+  >
+    <ExtToolbar docked="top">
+      <ExtLabel html="Chart of Accounts"></ExtLabel>
+    </ExtToolbar>
+    <ExtTree
+      fitToParent="true"
+      cls="red-node-text"
+      [store]="treeStore"
+      (select)="onSelect($event)"
+    >
+    </ExtTree>
+  </ExtPanel>
+  <ExtPanel [flex]="1">
+    <ExtGrid
+      fitToParent="true"
+      [shadow]="true"
+      [store]="gridStore"
+      enableColumnMove="true"
+      (ready)="onGridReady($event)"
+      (childdoubletap)="onChilddoubletap($event)"
+      [plugins]="{
+        grideditable: { enableDeleteButton: false, triggerEvent: '' },
+        gridfilters: true,
+        gridexporter: true
+      }"
+    >
+      <ExtToolbar docked="top">
+        <ExtButton
+          text="Add"
+          ui="action raised round"
+          iconCls="x-fa fa-plus"
+          iconAlign="left"
+          (tap)="onAddNew()"
+          alignSelf="right"
+        >
+        </ExtButton>
+        <ExtSpacer></ExtSpacer>
+        <ExtLabel html="{{ chartAccount?.Type }}"></ExtLabel>
+      </ExtToolbar>
+
+      <ExtGridcolumn
+        text="Id"
+        flex="1"
+        dataIndex="Id"
+        hidden="true"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="ParentId"
+        flex="1"
+        dataIndex="ParentId"
+        hidden="true"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Name"
+        flex="1"
+        editable="true"
+        dataIndex="Name"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Code"
+        flex="1"
+        editable="true"
+        dataIndex="Code"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Operations"
+        flex="1"
+        [cell]="{
+          tools: {
+            centered: false,
+            trash: {
+              handler: this.deleteChildChartAccount
+            }
+          }
+        }"
+      ></ExtGridcolumn>
+    </ExtGrid>
+  </ExtPanel>
+</ExtContainer>

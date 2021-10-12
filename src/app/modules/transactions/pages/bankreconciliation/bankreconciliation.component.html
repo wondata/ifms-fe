@@ -1,31 +1,156 @@
-<ExtPanel extname="home"
-  padding="10 10 10 2"
-  layout="fit"
-  fitToParent="true">
-  <ExtGrid [store]="stored">
-    <ExtColumn text="Is Reconciled"
-      dataIndex="IsReconciled"
-      width="200"></ExtColumn>
-    <ExtColumn text="VoucherType"
-      dataIndex="CoVoucherType"
-      width="200"></ExtColumn>
-    <ExtColumn text="ReferenceNo"
-      dataIndex="ReferenceNo"
-      width="200"></ExtColumn>
-    <ExtColumn text="TransactionDate"
-      dataIndex="TransactionDate"
-      width="200"></ExtColumn>
-    <ExtColumn text="Purpose"
-      dataIndex="Purpose"
-      width="200"></ExtColumn>
-    <ExtColumn text="ChequeNo"
-      dataIndex="ChequeNo"
-      width="200"></ExtColumn>
-    <ExtColumn text="DebitAmount"
-      dataIndex="DebitAmount"
-      width="200"></ExtColumn>
-    <ExtColumn text="CreditAmount"
-      dataIndex="CreditAmount"
-      width="200"></ExtColumn>
-  </ExtGrid>
+<ExtPanel extname="home" padding="10 10 10 2" layout="fit" fitToParent="true">
+  <ExtContainer [layout]="'vbox'" flex="2" fitToParent="true">
+    <ExtFormpanel
+      (ready)="onReady($event)"
+      [shadow]="true"
+      [padding]="20"
+      layout="hbox"
+      width="100%"
+      [platformConfig]="{ phone: { maxHeight: 500, width: 350 } }"
+    >
+      <ExtDatefield
+        [width]="250"
+        destroyPickerOnHide="true"
+        label="Statement Date"
+      >
+      </ExtDatefield>
+
+      <ExtCombobox
+        [label]="'Account To Reconcile'"
+        [width]="300"
+        [store]="data_slaAccount"
+        name="CostCenterId"
+        id="CostCenterId"
+        [editable]="true"
+        [displayField]="'{text} <br/> {Name}'"
+        [valueField]="'value'"
+        [forceSelection]="false"
+        [queryMode]="'local'"
+        [labelAlign]="'placeholder'"
+        [clearable]="true"
+        [margin]="'0 10 0 10'"
+      >
+      </ExtCombobox>
+
+      <ExtCombobox
+        [width]="200"
+        [label]="'Show'"
+        [store]="data_show"
+        [displayField]="'name'"
+        [valueField]="'abbrev'"
+        [queryMode]="'local'"
+        [labelAlign]="'placeholder'"
+        [clearable]="true"
+        [margin]="'0 10 0 10'"
+      >
+      </ExtCombobox>
+    </ExtFormpanel>
+
+    <ExtGrid [store]="data_bankReconcil" [height]="'90%'">
+      <ExtToolbar [docked]="'top'" [layout]="{ type: 'hbox', pack: 'left' }">
+        <ExtButton
+          text="Save"
+          ui="action raised round"
+          [margin]="'0 10 0 0'"
+          iconCls="x-fa fa-plus"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onSave($event)"
+        >
+        </ExtButton>
+        <ExtButton
+          text="Preview"
+          ui="action raised round "
+          [margin]="'0 10 0 0'"
+          iconCls="x-fa fa-eye"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onPreview($event)"
+        >
+        </ExtButton>
+      </ExtToolbar>
+
+      <ExtToolbar
+        [docked]="'bottom'"
+        [layout]="{ type: 'vbox', pack: 'right' }"
+      >
+        <ExtNumberfield
+          [labelAlign]="'placeholder'"
+          [label]="'Statement Ending Balance:'"
+          value="0.00"
+          textAlign="right"
+        >
+        </ExtNumberfield>
+
+        <ExtNumberfield
+          [labelAlign]="'placeholder'"
+          [label]="'-Outstanding Checks:'"
+          value="0.00"
+          textAlign="right"
+          [disabled]="true"
+        >
+        </ExtNumberfield>
+
+        <ExtNumberfield
+          [labelAlign]="'placeholder'"
+          [label]="'+Deposits in Transit:'"
+          value="0.00"
+          textAlign="right"
+          [disabled]="true"
+        >
+        </ExtNumberfield>
+
+        <ExtNumberfield
+          [labelAlign]="'placeholder'"
+          [label]="'-GL Balance:'"
+          value="0.00"
+          textAlign="right"
+          [disabled]="true"
+        >
+        </ExtNumberfield>
+
+        <ExtNumberfield
+          [labelAlign]="'placeholder'"
+          [label]="'=Unreconciled Difference:'"
+          value="0.00"
+          textAlign="right"
+          [disabled]="true"
+        >
+        </ExtNumberfield>
+      </ExtToolbar>
+
+      <ExtColumn
+        text="Is Reconciled"
+        dataIndex="IsReconciled"
+        width="150"
+      ></ExtColumn>
+      <ExtColumn
+        text="VoucherType"
+        dataIndex="VoucherTypeId"
+        width="150"
+      ></ExtColumn>
+      <ExtColumn
+        text="ReferenceNo"
+        dataIndex="ReferenceNo"
+        width="150"
+      ></ExtColumn>
+      <ExtColumn
+        text="TransactionDate"
+        dataIndex="TransactionDate"
+        width="150"
+      ></ExtColumn>
+      <ExtColumn text="Purpose" dataIndex="Purpose" width="150"></ExtColumn>
+      <ExtColumn text="ChequeNo" dataIndex="ChequeNo" width="150"></ExtColumn>
+      <ExtColumn
+        text="DebitAmount"
+        dataIndex="DebitAmount"
+        width="150"
+      ></ExtColumn>
+      <ExtColumn
+        text="CreditAmount"
+        dataIndex="CreditAmount"
+        width="150"
+      ></ExtColumn>
+    </ExtGrid>
+  </ExtContainer>
 </ExtPanel>

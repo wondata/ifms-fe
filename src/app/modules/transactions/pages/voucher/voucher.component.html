@@ -1,14 +1,573 @@
-<div class="grid grid-rows-3 grid-flow-col gap-4">
-  <div class="row-span-3 max-w-md mx-auto">
-    <app-voucher-list></app-voucher-list>
-  </div>
-  <div class="col-span-2 ...">
-    <app-voucher-form></app-voucher-form>
-  </div>
-  <div class="row-span-2 col-span-2 ...">
-    <app-voucher-detail></app-voucher-detail>
-  </div>
-</div>
-<div class="max-w-md mx-auto">
-  <app-voucher-list></app-voucher-list>
-</div>
+<ExtContainer padding="10" layout="hbox" fitToParent="true">
+  <ExtPanel
+    [docked]="'left'"
+    [width]="'45%'"
+    [shadow]="true"
+    [resizable]="{ split: true, edges: 'east', dynamic: true }"
+  >
+    <ExtGrid
+      [store]="stored"
+      height="100%"
+      layout="fit"
+      (childdoubletap)="onChilddoubletap($event)"
+      (ready)="gridReady($event)"
+    >
+      <ExtToolbar [docked]="'top'" [layout]="{ type: 'hbox', pack: 'left' }">
+        <ExtButton
+          text="Preview"
+          ui="action raised round"
+          [margin]="'0 10 0 0'"
+          iconCls="x-fa fa-eye"
+          iconAlign="left"
+          alignSelf="right"
+          (tap)="onPreview($event)"
+        >
+        </ExtButton>
+      </ExtToolbar>
+
+      <ExtGridcolumn
+        text="Id"
+        dataIndex="Id"
+        hidden="true"
+        flex="1"
+        [editor]="{ xtype: 'hiddenfield' }"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="IsBalanced"
+        dataIndex="IsBalanced"
+        [renderer]="this.renderSign"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Date"
+        dataIndex="Date"
+        formatter='date("M,d/Y")'
+      ></ExtGridcolumn>
+      <ExtGridcolumn text="SequenceNo" dataIndex="ReferenceNo"></ExtGridcolumn>
+      <ExtGridcolumn text="ChequeNo" dataIndex="ChequeNo"></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Payed To/Received"
+        dataIndex="PayedToReceivedFrom"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="Purpose"
+        tpl="{PurposeTemplate.text}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn text="Description" dataIndex="Description"></ExtGridcolumn>
+      <ExtGridcolumn
+        text="OwnerCostCenter"
+        tpl="{CostCenter.Name}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn
+        text="VoucherType"
+        tpl="{VoucherType.Name}"
+      ></ExtGridcolumn>
+      <ExtGridcolumn text="Amount" dataIndex="Amount"></ExtGridcolumn>
+      <ExtGridcolumn
+        text="PostedFromOperation"
+        dataIndex="PostedFromOperation"
+      ></ExtGridcolumn>
+    </ExtGrid>
+  </ExtPanel>
+
+  <ExtPanel resizable="{split: true,  edges: 'center', dynamic: true}">
+    <ExtContainer layout="vbox" fitToParent="true">
+      <ExtFormpanel
+        (ready)="onReady($event)"
+        [layout]="'hbox'"
+        role="voucherForm"
+      >
+        <ExtFieldset [width]="width">
+          <ExtTextfield
+            [label]="'Id:'"
+            [labelAlign]="'placeholder'"
+            [placeholder]="'This field is required'"
+            [displayed]="false"
+            [hidden]="false"
+            name="Id"
+            id="Id"
+          >
+          </ExtTextfield>
+
+          <ExtCombobox
+            [label]="'Owner Cost Center'"
+            [store]="data_costCenter"
+            name="CostCenterId"
+            id="CostCenterId"
+            [editable]="true"
+            [displayField]="'Name'"
+            [valueField]="'Id'"
+            [forceSelection]="false"
+            [queryMode]="'local'"
+            [labelAlign]="'placeholder'"
+            [clearable]="true"
+          >
+          </ExtCombobox>
+
+          <ExtCombobox
+            [label]="'Voucher Type'"
+            [store]="data_voucher"
+            name="VoucherTypeId"
+            id="VoucherTypeId"
+            (change)="onChangeVoucherType($event)"
+            [editable]="true"
+            [displayField]="'Name'"
+            [valueField]="'Id'"
+            [forceSelection]="false"
+            [queryMode]="'local'"
+            [labelAlign]="'placeholder'"
+            [clearable]="true"
+          >
+          </ExtCombobox>
+
+          <ExtDatefield
+            [label]="'Date'"
+            [labelAlign]="'placeholder'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            name="Date"
+            id="Date"
+            altFormats="c"
+          >
+          </ExtDatefield>
+
+          <ExtFieldset [layout]="'hbox'">
+            <ExtTextfield
+              [label]="'Sequence No.'"
+              [labelAlign]="'placeholder'"
+              [required]="true"
+              [placeholder]="'This field is required'"
+              name="ReferenceNo"
+              id="ReferenceNo"
+            >
+            </ExtTextfield>
+
+            <ExtTextfield
+              [label]="'Other Ref. No'"
+              [labelAlign]="'placeholder'"
+              [required]="true"
+              [placeholder]="'This field is required'"
+              name="DocumentNo"
+              id="DocumentNo"
+              [required]="true"
+            >
+            </ExtTextfield>
+          </ExtFieldset>
+
+          <ExtNumberfield
+            [label]="'Amount'"
+            [required]="true"
+            [labelAlign]="'placeholder'"
+            [placeholder]="'This field is required'"
+            name="Amount"
+          >
+          </ExtNumberfield>
+
+          <ExtTextfield
+            [label]="'Received From'"
+            [labelAlign]="'placeholder'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            name="PayedToReceivedFrom"
+            id="PayedToReceivedFrom"
+          >
+          </ExtTextfield>
+
+          <ExtTextfield
+            [label]="'Tax Id:'"
+            [labelAlign]="'placeholder'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            [displayed]="false"
+            [hidden]="false"
+            name="TaxId"
+            id="TaxId"
+          >
+          </ExtTextfield>
+
+          <ExtCombobox
+            [label]="'Mode Of Payment'"
+            [store]="data_modePayment"
+            [editable]="true"
+            name="ModeOfPaymentId"
+            (change)="onChangeMOP($event)"
+            id="ModeOfPaymentId"
+            [displayField]="'Name'"
+            [valueField]="'Id'"
+            [forceSelection]="false"
+            [queryMode]="'local'"
+            [labelAlign]="'placeholder'"
+            [clearable]="true"
+          >
+          </ExtCombobox>
+
+          <ExtDatefield
+            [label]="'Posted Date'"
+            name="PostedDate"
+            id="PostedDate"
+            destroyPickerOnHide="true"
+            [value]="date"
+          ></ExtDatefield>
+
+          <ExtCombobox
+            [label]="'Project'"
+            [store]="data_account"
+            [editable]="true"
+            name="ProjectId"
+            id="ProjectId"
+            [displayed]="false"
+            [hidden]="false"
+            [displayField]="'Name'"
+            [valueField]="'code'"
+            [forceSelection]="true"
+            [queryMode]="'local'"
+            [labelAlign]="'placeholder'"
+            [clearable]="true"
+          >
+          </ExtCombobox>
+
+          <ExtTextfield
+            [label]="'Payment Doc. No:'"
+            [labelAlign]="'placeholder'"
+            [required]="true"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="ChequeNo"
+            id="ChequeNo"
+          >
+          </ExtTextfield>
+        </ExtFieldset>
+
+        <ExtFieldset [width]="width">
+          <ExtCombobox
+            [label]="'Purpose'"
+            [store]="data_purpose"
+            [editable]="true"
+            name="PurposeTemplateId"
+            id="PurposeTemplateId"
+            [displayField]="'Name'"
+            [valueField]="'Id'"
+            [forceSelection]="true"
+            [queryMode]="'local'"
+            [labelAlign]="'placeholder'"
+            [clearable]="true"
+          >
+          </ExtCombobox>
+
+          <ExtTextareafield
+            [label]="'Description'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            [width]="300"
+            [maxRows]="10"
+            name="Description"
+            id="Description"
+          >
+          </ExtTextareafield>
+
+          <ExtDatefield
+            [label]="'Authorized Date'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            name="AuthorizedDate"
+            id="AuthorizedDate"
+            destroyPickerOnHide="true"
+            [value]="date"
+          ></ExtDatefield>
+
+          <ExtDatefield
+            [label]="'Settlement End Date'"
+            [required]="true"
+            [placeholder]="'This field is required'"
+            name="SettlementDate"
+            id="SettlementDate"
+            destroyPickerOnHide="true"
+            [value]="date"
+          ></ExtDatefield>
+
+          <ExtCheckbox
+            [boxLabel]="'Guarantee Advance'"
+            [checked]="false"
+            name="GuaranteeAdvance"
+            id="GuaranteeAdvance"
+            (check)="onCheckGuarantee($event)"
+            (uncheck)="onUncheckGuarantee($event)"
+          >
+          </ExtCheckbox>
+
+          <ExtTextfield
+            [label]="'Bank Name:'"
+            [labelAlign]="'placeholder'"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="BankName"
+            id="BankName"
+          >
+          </ExtTextfield>
+
+          <ExtTextfield
+            [label]="'Bank Branch:'"
+            [labelAlign]="'placeholder'"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="BankBranch"
+            id="BankBranch"
+          >
+          </ExtTextfield>
+
+          <ExtTextfield
+            [label]="'Guarantee Start Date:'"
+            [labelAlign]="'placeholder'"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="GuaranteeStartDate"
+            name="GuaranteeStartDate"
+          >
+          </ExtTextfield>
+
+          <ExtTextfield
+            [label]="'Guarantee End Date:'"
+            [labelAlign]="'placeholder'"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="GuaranteeEndDate"
+            id="GuaranteeEndDate"
+          >
+          </ExtTextfield>
+
+          <ExtTextfield
+            [label]="'Guarantee Status:'"
+            [labelAlign]="'placeholder'"
+            [displayed]="false"
+            [hidden]="false"
+            [placeholder]="'This field is required'"
+            name="GuaranteeStatus"
+            id="GuaranteeStatus"
+          >
+          </ExtTextfield>
+        </ExtFieldset>
+
+        <ExtButton
+          [ui]="'action raised'"
+          [margin]="'0 0 0 0'"
+          [displayed]="false"
+          [hidden]="false"
+          [text]="'Confirm'"
+        >
+        </ExtButton>
+      </ExtFormpanel>
+
+      <!--   (edit)="onEdit($event)" rowedit: { autoConfirm: false }
+         [listeners]="{
+            selectionchange: this.onSelectionChange
+          }"
+      -->
+      <ExtContainer padding="10" layout="fit" flex="2" fitToParent="true">
+        <ExtGrid
+          [store]="voucherDetail"
+          [height]="'100%'"
+          (ready)="gridReady2($event)"
+          afterEdit="onEdit($event)"
+          (edit)="onEdit($event)"
+          [rowNumbers]="true"
+          [markDirty]="true"
+          (specialkey)="onSpecialkey($event)"
+          [plugins]="{
+            summaryrow: true,
+            gridsummaryrow: true,
+            gridcellediting: true
+          }"
+        >
+          <ExtToolbar
+            [docked]="'top'"
+            [layout]="{ type: 'hbox', pack: 'left' }"
+          >
+            <ExtButton
+              text="Insert Row"
+              ui="action raised round"
+              [margin]="'0 10 0 0'"
+              iconCls="x-fa fa-plus"
+              iconAlign="left"
+              alignSelf="right"
+              (tap)="onAddRow($event)"
+            >
+            </ExtButton>
+            <ExtButton
+              text="Tax Calculation"
+              ui="confirm raised round "
+              [margin]="'0 10 0 0'"
+              iconCls="x-fa fa-check"
+              iconAlign="left"
+              alignSelf="right"
+              (tap)="onTaxCalculation($event)"
+            >
+            </ExtButton>
+            <ExtButton
+              text="Load Account"
+              ui="decline raised round"
+              [margin]="'0 10 0 0'"
+              iconCls="x-fa fa-minus"
+              iconAlign="left"
+              alignSelf="right"
+              (tap)="onLoadAccount($event)"
+            >
+            </ExtButton>
+          </ExtToolbar>
+
+          <ExtGridcolumn
+            text="Id"
+            dataIndex="Id"
+            hidden="false"
+            flex="1"
+            [editor]="{ xtype: 'hiddenfield' }"
+            editable="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Cost Center"
+            dataIndex="CostCenterId"
+            [renderer]="this.renderColumn"
+            [editor]="{ xtype: 'selectfield', options: costCenterOptions }"
+            [editable]="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Account Code"
+            dataIndex="SubsidiaryAccountId"
+            [renderer]="this.renderColumn"
+            [editor]="{
+              xtype: 'selectfield',
+              options: accountOptions,
+              handler: 'onEdit($event)'
+            }"
+            [editable]="true"
+          >
+          </ExtGridcolumn>
+          <ExtGridcolumn
+            text="Account Name"
+            dataIndex="SubsidiaryAccount"
+            tpl="{SubsidiaryAccount.Name}"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Debit Amount"
+            dataIndex="DebitAmount"
+            [editable]="true"
+            [summaryRenderer]="this.summarizeDebit"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Credit Amount"
+            dataIndex="CreditAmount"
+            [editable]="true"
+            [summaryRenderer]="this.summarizeCredit"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Customer"
+            dataIndex="CustomerId"
+            [editable]="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Supplier/ Vendor"
+            dataIndex="VendorId"
+            [editable]="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Staff Name/ Id"
+            dataIndex="staffId"
+            [editable]="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Project Task"
+            dataIndex="ProjectId"
+            [editable]="true"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Cost Code"
+            dataIndex="CostCode"
+            [editable]="true"
+            [editor]="{ xtype: 'selectfield', options: costCenterOptions }"
+          ></ExtGridcolumn>
+          <ExtGridcolumn
+            text="Remark"
+            dataIndex="Remark"
+            [editable]="true"
+          ></ExtGridcolumn>
+
+          <ExtToolbar
+            [docked]="'bottom'"
+            [layout]="{ type: 'hbox', pack: 'left' }"
+          >
+            <ExtFormpanel
+              (ready)="onReady2($event)"
+              role="voucherForm2"
+              layout="hbox"
+            >
+              <ExtButton
+                [text]="'New'"
+                ui="action raised round"
+                iconCls="x-fa fa-plus"
+                [margin]="'0 10 0 0'"
+                iconAlign="left"
+                alignSelf="right"
+                (tap)="onNew($event)"
+              >
+              </ExtButton>
+              <ExtButton
+                [text]="'Save'"
+                ui="confirm raised round"
+                iconCls="x-fa fa-plus"
+                [margin]="'0 10 0 0'"
+                iconAlign="left"
+                alignSelf="right"
+                (tap)="onSave($event)"
+              ></ExtButton>
+              <ExtButton
+                [text]="'Delete'"
+                ui="decline raised round"
+                iconCls="x-fa fa-stop-circle"
+                [margin]="'0 15 0 0'"
+                iconAlign="left"
+                alignSelf="right"
+                id="deleteButton"
+                name="deleteButton"
+                (tap)="onDelete($event)"
+              ></ExtButton>
+
+              <ExtNumberfield
+                [labelAlign]="'placeholder'"
+                [label]="'Debit Total'"
+                [required]="false"
+                name="DebitAmount"
+                id="DebitAmount"
+                [minValue]="0"
+                [disabled]="true"
+              >
+              </ExtNumberfield>
+              <ExtNumberfield
+                [labelAlign]="'placeholder'"
+                [label]="'Credit Total'"
+                [required]="false"
+                name="CreditAmount"
+                id="CreditAmount"
+                [minValue]="0"
+                [disabled]="true"
+              >
+              </ExtNumberfield>
+              <ExtNumberfield
+                [labelAlign]="'placeholder'"
+                [label]="'Balance'"
+                [required]="false"
+                name="txtBalance"
+                id="txtBalance"
+                [minValue]="0"
+                [disabled]="true"
+              >
+              </ExtNumberfield>
+            </ExtFormpanel>
+          </ExtToolbar>
+        </ExtGrid>
+      </ExtContainer>
+    </ExtContainer>
+  </ExtPanel>
+</ExtContainer>

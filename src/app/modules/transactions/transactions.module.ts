@@ -19,6 +19,8 @@ import { PaymentVoucherComponent } from './pages/paymentVoucher/paymentvoucher.c
 import { VoucherComponent } from './pages/voucher/voucher.component';
 import { TransactionsState } from './store/states/transactions.state';
 import { TransactionsRoutingModule } from './transactions.routing';
+import { PaymentApprovalComponent } from './pages/payment-approval/payment-approval.component';
+import { SettlementComponent } from './pages/settlement/settlement.component';
 @NgModule({
   declarations: [
     VoucherListComponent,
@@ -30,6 +32,8 @@ import { TransactionsRoutingModule } from './transactions.routing';
     CollectionVoucherComponent,
     FinancialTransactionComponent,
     PaymentVoucherComponent,
+    PaymentApprovalComponent,
+    SettlementComponent,
   ],
   imports: [
     NgxsModule.forFeature([TransactionsState]),

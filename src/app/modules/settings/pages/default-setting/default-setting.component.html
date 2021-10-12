@@ -8,46 +8,37 @@
       <p class="mt-4 text-xs">General Settings Description</p>
     </div>
     <div class="flex-1 mt-2">
-      <form [formGroup]="generalSettingsForm">
         <ExtContainer [width]="width"
           layout="fit"
           fitToParent="true">
-          <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
+        <form [formGroup]="generalSettingsForm">
+          <ExtFormpanel [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }" (ready)="onReady($event)">
             <ExtFieldset [title]="''"
               [defaults]="{ labelAlign: 'placeholder' }">
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Income Summery Account"
-                  value=""
-                  required
-                  formControlName="incomeSummeryAccount" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Closing Capital Account"
-                  value=""
-                  formControlName="closingCapitalAccount" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Default Cost Center"
-                  value=""
-                  formControlName="defaultCostCenter" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Inter Branch Control Account"
-                  value=""
-                  formControlName="interBranchControlAccount" />
-              </mat-form-field>
+                <ExtCombobox [label]="'Default Cost Center'" [store]="accounts_income" [editable]="true"
+                  name="IncomeSummaryAccountId" id="IncomeSummaryAccountId"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Closing Capital Account'" [store]="data_accounts_closing" [editable]="true"  name="ClosingCapitalAccount"
+                  name="ClosingCapitalAccountId" id="ClosingCapitalAccountId"  [required]="true" [displayField]="'Name'"
+                 [valueField]="'Id'" [queryMode]="'local'"  [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Default Cost Center'" [store]="data_costCenter" [editable]="true" [displayField]="'Name'"
+                  name="DefaultCostCenterId" id="DefaultCostCenterId"  [required]="true"
+                [valueField]="'Id'" [queryMode]="'local'"  [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Inter Branch Control Account'" [store]="data_controlAccount" [editable]="true"
+                  name="InterBranchControlAccountId" id="InterBranchControlAccountId"  [required]="true"
+                [displayField]="'Name'"
+                 [valueField]="'Id'" [queryMode]="'local'"  [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
             </ExtFieldset>
-            <ExtButton [margin]="'0 0 0 0'"
-              [text]="'Save'"
-              (tap)="onSubmitGeneralSettingsForm()">
+            <ExtButton [margin]="'0 0 0 0'"  [text]="'Save'" (tap)="onSubmitGeneralSettingsForm()">
             </ExtButton>
           </ExtFormpanel>
+        </form>
+
         </ExtContainer>
-      </form>
     </div>
   </div>
   <div class="flex flex-row ml-10 mt-1">
@@ -60,41 +51,30 @@
         <ExtContainer [width]="width"
           layout="fit"
           fitToParent="true">
-          <ExtFormpanel [padding]="20"
+          <ExtFormpanel [padding]="20" (ready)="onReady_2($event)"
             [platformConfig]="{ '!phone': { maxHeight: 500, width: 350 } }">
             <ExtFieldset [title]="''"
               [defaults]="{ labelAlign: 'placeholder' }">
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Default Cost Center"
-                  value=""
-                  required
-                  formControlName="defaultCostCenter" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Default Voucher Type"
-                  value=""
-                  formControlName="defaultVoucherType" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Gain On Disposal Account"
-                  value=""
-                  formControlName="gainOnDisposalAccount" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Loss On Disposal Account"
-                  value=""
-                  formControlName="lossOnDisposalAccount" />
-              </mat-form-field>
-              <mat-form-field class="w-2/3 flex justify-center">
-                <input matInput
-                  placeholder="Cash Account"
-                  value=""
-                  formControlName="cashAccount" />
-              </mat-form-field>
+                <ExtCombobox [label]="'Default Cost Center'" [store]="data_costCode" [editable]="true"
+                 name="DefaultCostCenterId_2" id="DefaultCostCenterId_2"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Default Voucher Type'" [store]="data_voucher" [editable]="true"
+                 name="DefualtVoucherTypeId" id="DefualtVoucherTypeId"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Gain On Disposal Account'" [store]="data_accounts_gain" [editable]="true"
+                 name="GainOnDisposalAccountId" id="GainOnDisposalAccountId"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Loss On Disposal Account'" [store]="data_accounts_loss" [editable]="true"
+                 name="LossOnDisposalAccountId" id="LossOnDisposalAccountId"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
+                <ExtCombobox [label]="'Cash Account'" [store]="data_accounts_cash" [editable]="true"
+                 name="CashAccountId" id="CashAccountId"  [required]="true"
+                  [displayField]="'Name'" [valueField]="'Id'"  [queryMode]="'local'" [labelAlign]="'placeholder'" [clearable]="true">
+                  </ExtCombobox>
             </ExtFieldset>
             <ExtButton [margin]="'0 0 0 0'"
               [text]="'Save'"

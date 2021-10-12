@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { environment } from 'src/environments/environment';
@@ -23,6 +24,7 @@ import { LayoutModule } from './layouts/layout.module';
     MatTableModule,
     MatSnackBarModule,
     LayoutModule,
+    NgxsFormPluginModule.forRoot(),
     NgxsModule.forRoot([]),
     MatGridListModule,
     NgxsModule.forFeature([]),
